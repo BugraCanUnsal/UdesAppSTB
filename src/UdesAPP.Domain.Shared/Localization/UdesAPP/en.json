@@ -1,0 +1,17 @@
+{
+  "culture": "en",
+  "texts": {
+    "Menu:Home": "Home",
+    "Menu:Students": "Öğrenciler",
+    "Menu:AllStudents": "Tüm Öğrenciler",
+    "Menu:PotentialStudents": "Potansiyel Öğrenciler",
+    "Menu:Classes": "Sınıflar",
+    "Menu:Periods": "Periyotlar",
+    "Menu:Teachers": "Öğretmenler",
+    "Menu:AllClasses": "Tüm Sınıflar",
+    "Menu:Payments": "Ödemeler",
+    "Welcome": "Welcome",
+    "NewStudent": "Öğrenci Ekle",
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."
+  }
+}

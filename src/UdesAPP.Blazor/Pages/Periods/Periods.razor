@@ -1,0 +1,123 @@
+﻿@page "/periods"
+@using UdesAPP.GeneralEnums
+@using UdesAPP.Localization
+@using Volo.Abp.Application.Dtos
+@using UdesAPP.Periods
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Components.Web
+@inject IStringLocalizer<UdesAPPResource> L
+@inject AbpBlazorMessageLocalizerHelper<UdesAPPResource> LH
+@inherits AbpCrudPageBase<IPeriodsCRUDAppService, PeriodsDto, int, PagedAndSortedResultRequestDto,PeriodsDto>
+
+<Card>
+    <CardHeader>
+        <Row Class="justify-content">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <h2>@L["Periyotlar"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <Button Color="Color.Primary"
+                        Clicked="OpenCreateModalAsync">
+                    @L["Yeni Periyot"]
+                </Button>
+            </Column>
+        </Row>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="PeriodsDto"
+                  Data="Entities"
+                  ReadData="OnDataGridReadAsync"
+                  TotalItems="TotalCount"
+                  ShowPager="true"
+                  PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridEntityActionsColumn TItem="PeriodsDto" @ref="@EntityActionsColumn">
+                    <DisplayTemplate>
+                        <EntityActions TItem="PeriodsDto" EntityActionsColumn="@EntityActionsColumn">
+                            <EntityAction TItem="PeriodsDto"
+                                          Text="@L["Düzenle"]"
+                                          Clicked="() => OpenEditModalAsync(context)" />
+                            <EntityAction TItem="PeriodsDto"
+                                          Text="@L["Sil"]"
+                                          Clicked="() => DeleteEntityAsync(context)"
+                                          ConfirmationMessage="() => GetDeleteConfirmationMessage(context)" />
+                        </EntityActions>
+                    </DisplayTemplate>
+                </DataGridEntityActionsColumn>
+                <DataGridColumn TItem="PeriodsDto"
+                                Field="@nameof(PeriodsDto.Description)"
+                                Caption="@L["Açıklama"]"></DataGridColumn>
+                <DataGridColumn TItem="PeriodsDto"
+                                Field="@nameof(PeriodsDto.HoursPerWeek)"
+                                Caption="@L["Haftalık Saat"]">
+                </DataGridColumn>               
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
+
+                <Modal @ref="@CreateModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@L["Yeni Periyot"]</ModalTitle>
+                <CloseButton Clicked="CloseCreateModalAsync"/>
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">                    
+                    <Field>
+                        <FieldLabel>@L["Açıklama"]</FieldLabel>
+                        <TextEdit @bind-Text="@NewEntity.Description">
+                        </TextEdit>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Haftalık Saat"]</FieldLabel>
+                        <NumericEdit TValue="int?" @bind-Value="@NewEntity.HoursPerWeek"/>
+                    </Field>                   
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseCreateModalAsync">@L["İptal"]</Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="CreateEntityAsync">@L["Kaydet"]</Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="@EditModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingEntity.Description</ModalTitle>
+                <CloseButton Clicked="CloseEditModalAsync"/>
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@EditValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Field>
+                        <FieldLabel>@L["Açıklama"]</FieldLabel>
+                        <TextEdit @bind-Text="@NewEntity.Description">
+                        </TextEdit>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Haftalık Saat"]</FieldLabel>
+                        <NumericEdit TValue="int?" @bind-Text="@NewEntity.HoursPerWeek" />
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditModalAsync">@L["İptal"]</Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="UpdateEntityAsync">@L["Kaydet"]</Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>

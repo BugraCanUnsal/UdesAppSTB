@@ -1,0 +1,8 @@
+body {
+    
+}
+
+:root {
+    --lpx-logo: url('/images/logo/udes/udes-logo.png');
+    --lpx-logo-icon: url('/images/logo/udes/udes-logo-reverse.png');
+}

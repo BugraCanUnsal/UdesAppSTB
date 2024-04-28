@@ -1,0 +1,253 @@
+﻿@page "/allClasses"
+@using Volo.Abp.Application.Dtos
+@using UdesAPP.Dtos
+@using UdesAPP.Classes
+@using UdesAPP.Students
+@using UdesAPP.Localization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Components.Web
+@inject IStringLocalizer<UdesAPPResource> L
+@inject AbpBlazorMessageLocalizerHelper<UdesAPPResource> LH
+@inherits AbpCrudPageBase<IAllClassesAppService, AllClassesDto, int, PagedAndSortedResultRequestDto,CreateUpdateAllClassesDto>
+
+
+<div class="demo-card-container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <Card>
+                        <CardHeader>
+                            <Row Class="justify-content">
+                                <Column ColumnSize="ColumnSize.IsAuto">
+                                    <h2>@L["Tüm Sınıflar"]</h2>
+                                </Column>
+                                <Column ColumnSize="ColumnSize.IsAuto">
+                                    <Button Color="Color.Primary"
+                                            Clicked="OpenCreateModalAsync">
+                                        @L["Yeni Sınıf"]
+                                    </Button>
+                                </Column>
+                            </Row>
+                        </CardHeader>
+                        <CardBody>
+                            <DataGrid TItem="AllClassesDto"
+                                      RowClicked="ClassIsClicked"
+                                      Data="Entities"
+                                      ReadData="OnDataGridReadAsync"
+                                      TotalItems="TotalCount"
+                                      ShowPager="true"
+                                      PageSize="PageSize">
+                                <DataGridColumns>
+                                    <DataGridEntityActionsColumn TItem="AllClassesDto" @ref="@EntityActionsColumn">
+                                        <DisplayTemplate>
+                                            <EntityActions TItem="AllClassesDto" EntityActionsColumn="@EntityActionsColumn">
+                                                <EntityAction TItem="AllClassesDto"
+                                                              Text="@L["Düzenle"]"
+                                                              Clicked="() => OpenEditModalAsync(context)" />
+                                                <EntityAction TItem="AllClassesDto"
+                                                              Text="@L["Sil"]"
+                                                              Clicked="() => DeleteEntityAsync(context)"
+                                                              ConfirmationMessage="() => GetDeleteConfirmationMessage(context)" />
+                                            </EntityActions>
+                                        </DisplayTemplate>
+                                    </DataGridEntityActionsColumn>
+                                    <DataGridColumn TItem="AllClassesDto"
+                                                    Field="@nameof(AllClassesDto.ClassName)"
+                                                    Caption="@L["Sınıf Adı"]"></DataGridColumn>
+                                    <DataGridColumn TItem="AllClassesDto"
+                                                    Field="@nameof(AllClassesDto.TeacherId)"
+                                                    Caption="@L["Öğretmen"]">
+                                    </DataGridColumn>
+                                    <DataGridColumn TItem="AllClassesDto"
+                                                    Field="@nameof(AllClassesDto.BookId)"
+                                                    Caption="@L["Kitap"]">
+                                    </DataGridColumn>
+                                    <DataGridColumn TItem="AllClassesDto"
+                                                    Field="@nameof(AllClassesDto.DaysAndTimesOfWeekId)"
+                                                    Caption="@L["Gün ve Saatler"]">
+                                    </DataGridColumn>
+                                </DataGridColumns>
+                            </DataGrid>
+                        </CardBody>
+                    </Card>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <Card>
+                        <CardHeader>
+                            <h2>@L["Öğrenciler"]</h2>
+                        </CardHeader>
+                        <CardBody>
+                            <DataGrid TItem="StudentsOfClassDto"
+                                      Data="StudentsOfClass"
+                                      ReadData="OnParametersSetAsync"
+                                      TotalItems="TotalCount"
+                                      ShowPager="true"
+                                      PageSize="PageSize">
+                                <DataGridColumns>
+                                    <DataGridColumn TItem="StudentsOfClassDto"
+                                                    Field="@nameof(StudentsOfClassDto.Id)"
+                                                    Sortable="false"
+                                                    Caption="@L["Actions"]">
+                                        <DisplayTemplate>
+                                            <Dropdown>
+                                                <DropdownToggle Color="Color.Primary">
+                                                    @L["Actions"]
+                                                </DropdownToggle>
+                                                <DropdownMenu>                                                   
+                                                        <DropdownItem Clicked="() => OpenDeleteFromClassModal(context)">
+                                                            @L["Sınıftan Çıkar"]
+                                                        </DropdownItem>
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                        </DisplayTemplate>
+                                    </DataGridColumn>
+                                    <DataGridColumn TItem="StudentsOfClassDto"
+                                                    Field="@nameof(StudentsOfClassDto.Name)"
+                                                    Caption="@L["Adı"]"></DataGridColumn>
+                                    <DataGridColumn TItem="StudentsOfClassDto"
+                                                    Field="@nameof(StudentsOfClassDto.Surname)"
+                                                    Caption="@L["Soyadı"]">
+                                    </DataGridColumn>
+                                </DataGridColumns>
+                            </DataGrid>
+                        </CardBody>
+                    </Card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<Modal @ref="@CreateModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@L["Yeni Sınıf"]</ModalTitle>
+                <CloseButton Clicked="CloseCreateModalAsync"/>
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Sınıf Adı"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewEntity.ClassName">
+                                <Feedback>
+                                    <ValidationError/>
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                        <Field>
+                            <FieldLabel>@L["Öğretmen"]</FieldLabel>
+                        <NumericEdit TValue="int?" @bind-Value="@NewEntity.TeacherId"/>
+                        </Field>
+                        <Field>
+                            <FieldLabel>@L["Kitap"]</FieldLabel>
+                        <NumericEdit TValue="int?" @bind-Value="@NewEntity.BookId"/>
+                        </Field>
+                    <Field>
+                        <FieldLabel>@L["Periyotlar"]</FieldLabel>
+                        <Select TValue="int?" @bind-SelectedValue="@NewEntity.DaysAndTimesOfWeekId">
+                            @if (Loaded)
+                            {
+                                @foreach (PeriodDto period in PeriodDtos)
+                                {
+                                    <SelectItem TValue="int" Value="period.Id">
+                                        @L[$"{period.Description}"]
+                                    </SelectItem>
+                                }
+                            }
+                        </Select>
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseCreateModalAsync">@L["İptal"]</Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="CreateEntityAsync">@L["Kaydet"]</Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="@EditModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingEntity.ClassName</ModalTitle>
+                <CloseButton Clicked="CloseEditModalAsync"/>
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@EditValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Sınıf Adı"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingEntity.ClassName">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                        <Field>
+                            <FieldLabel>@L["Öğretmen"]</FieldLabel>
+                            <NumericEdit @bind-Value="@EditingEntity.TeacherId"/>
+                        </Field>
+                    <Field>
+                        <FieldLabel>@L["Kitap"]</FieldLabel>
+                        <NumericEdit @bind-Value="@EditingEntity.BookId" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Gün ve Saatler"]</FieldLabel>
+                        <NumericEdit @bind-Value="@EditingEntity.DaysAndTimesOfWeekId" />
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditModalAsync">@L["İptal"]</Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="UpdateEntityAsync">@L["Kaydet"]</Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="@DeleteStudentFromClassModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@DeletingFromClassStudent.Name @DeletingFromClassStudent.Surname</ModalTitle>
+                <CloseButton Clicked="CloseDeleteStudentFromClassModal" />
+            </ModalHeader>
+            <ModalBody>
+                Öğrenciyi sınıftan çıkarmak istediğinize emin misiniz?
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseDeleteStudentFromClassModal">
+                    @L["İptal"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="DeleteStudentFromClassAsync">
+                    @L["Çıkar"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
