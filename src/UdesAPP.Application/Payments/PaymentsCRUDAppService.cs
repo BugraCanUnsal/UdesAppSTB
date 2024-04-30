@@ -9,16 +9,16 @@ using Volo.Abp.Domain.Repositories;
 
 namespace UdesAPP.Payments
 {
-    public class PaymentsCRUIDAppService :
+    public class PaymentsCRUDAppService :
         CrudAppService<
             Payment,
             PaymentDto,
             int,
             PagedAndSortedResultRequestDto,
             PaymentDto>,
-        IPaymentsCRUIDAppService
+        IPaymentsCRUDAppService
     {
-        public PaymentsCRUIDAppService(IRepository<Payment, int> repository) 
+        public PaymentsCRUDAppService(IRepository<Payment, int> repository) 
             : base(repository)
         {
         }

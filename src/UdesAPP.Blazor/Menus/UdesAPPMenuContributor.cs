@@ -88,6 +88,14 @@ public class UdesAPPMenuContributor : IMenuContributor
                  url: "/payments"
                 ));
 
+        context.Menu.AddItem(
+            new ApplicationMenuItem(
+                "Books",
+                l["Menu:Books"],
+                icon: "fa-solid fa-book",
+                 url: "/books"
+                ));
+
 
 
         if (MultiTenancyConsts.IsEnabled)

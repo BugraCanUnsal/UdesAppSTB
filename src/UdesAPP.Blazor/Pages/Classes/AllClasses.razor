@@ -3,6 +3,8 @@
 @using UdesAPP.Dtos
 @using UdesAPP.Classes
 @using UdesAPP.Students
+@using UdesAPP.Books
+@using UdesAPP.Teachers
 @using UdesAPP.Localization
 @using Microsoft.Extensions.Localization
 @using Volo.Abp.AspNetCore.Components.Web
@@ -13,7 +15,7 @@
 
 <div class="demo-card-container">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <Card>
@@ -58,10 +60,32 @@
                                     <DataGridColumn TItem="AllClassesDto"
                                                     Field="@nameof(AllClassesDto.TeacherId)"
                                                     Caption="@L["Öğretmen"]">
+                                        <DisplayTemplate>
+                                            @if (Loaded)
+                                            {
+                                                @foreach (TeacherDto teachersDto in TeachersDtos)
+                                                {
+                                                    if (teachersDto.Id == context.TeacherId)
+                                                    {
+                                                        @L[$"{teachersDto.Name} {teachersDto.Surname}"]
+                                                    }
+                                                }
+                                            }
+                                        </DisplayTemplate>
                                     </DataGridColumn>
                                     <DataGridColumn TItem="AllClassesDto"
                                                     Field="@nameof(AllClassesDto.BookId)"
                                                     Caption="@L["Kitap"]">
+                                        <DisplayTemplate>
+                                            @if (Loaded)
+                                            {
+                                                @foreach (BooksDto booksDto in BooksDtos)
+                                                {
+                                                    if (booksDto.Id == context.BookId)
+                                                        @L[$"{booksDto.Title}"]
+                                                }
+                                            }
+                                        </DisplayTemplate>
                                     </DataGridColumn>
                                     <DataGridColumn TItem="AllClassesDto"
                                                     Field="@nameof(AllClassesDto.DaysAndTimesOfWeekId)"
@@ -74,7 +98,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+      </div>
+    <div class="row">
+        <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <Card>
@@ -143,14 +169,34 @@
                             </TextEdit>
                         </Field>
                     </Validation>
-                        <Field>
-                            <FieldLabel>@L["Öğretmen"]</FieldLabel>
-                        <NumericEdit TValue="int?" @bind-Value="@NewEntity.TeacherId"/>
-                        </Field>
-                        <Field>
-                            <FieldLabel>@L["Kitap"]</FieldLabel>
-                        <NumericEdit TValue="int?" @bind-Value="@NewEntity.BookId"/>
-                        </Field>
+                    <Field>
+                        <FieldLabel>@L["Öğretmen"]</FieldLabel>
+                        <Select TValue="int?" @bind-SelectedValue="@NewEntity.TeacherId">
+                            @if (Loaded)
+                            {
+                                @foreach (TeacherDto teacherDto in TeachersDtos)
+                                {
+                                    <SelectItem TValue="int" Value="teacherDto.Id">
+                                        @L[$"{teacherDto.Name} {teacherDto.Surname}"]
+                                    </SelectItem>
+                                }
+                            }
+                        </Select>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Kitap"]</FieldLabel>
+                        <Select TValue="int?" @bind-SelectedValue="@NewEntity.BookId">
+                            @if (Loaded)
+                            {
+                                @foreach (BooksDto booksDto in BooksDtos)
+                                {
+                                    <SelectItem TValue="int" Value="booksDto.Id">
+                                        @L[$"{booksDto.Title}"]
+                                    </SelectItem>
+                                }
+                            }
+                        </Select>
+                    </Field>
                     <Field>
                         <FieldLabel>@L["Periyotlar"]</FieldLabel>
                         <Select TValue="int?" @bind-SelectedValue="@NewEntity.DaysAndTimesOfWeekId">
@@ -199,17 +245,47 @@
                             </TextEdit>
                         </Field>
                     </Validation>
-                        <Field>
-                            <FieldLabel>@L["Öğretmen"]</FieldLabel>
-                            <NumericEdit @bind-Value="@EditingEntity.TeacherId"/>
-                        </Field>
                     <Field>
-                        <FieldLabel>@L["Kitap"]</FieldLabel>
-                        <NumericEdit @bind-Value="@EditingEntity.BookId" />
+                        <FieldLabel>@L["Öğretmen"]</FieldLabel>
+                        <Select TValue="int?" @bind-SelectedValue="@EditingEntity.TeacherId">
+                            @if (Loaded)
+                            {
+                                @foreach (TeacherDto teacherDto in TeachersDtos)
+                                {
+                                    <SelectItem TValue="int" Value="teacherDto.Id">
+                                        @L[$"{teacherDto.Name} {teacherDto.Surname}"]
+                                    </SelectItem>
+                                }
+                            }
+                        </Select>
                     </Field>
                     <Field>
-                        <FieldLabel>@L["Gün ve Saatler"]</FieldLabel>
-                        <NumericEdit @bind-Value="@EditingEntity.DaysAndTimesOfWeekId" />
+                        <FieldLabel>@L["Kitap"]</FieldLabel>
+                        <Select TValue="int?" @bind-SelectedValue="@EditingEntity.BookId">
+                            @if (Loaded)
+                            {
+                                @foreach (BooksDto booksDto in BooksDtos)
+                                {
+                                    <SelectItem TValue="int" Value="booksDto.Id">
+                                        @L[$"{booksDto.Title}"]
+                                    </SelectItem>
+                                }
+                            }
+                        </Select>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Periyotlar"]</FieldLabel>
+                        <Select TValue="int?" @bind-SelectedValue="@EditingEntity.DaysAndTimesOfWeekId">
+                            @if (Loaded)
+                            {
+                                @foreach (PeriodDto period in PeriodDtos)
+                                {
+                                    <SelectItem TValue="int" Value="period.Id">
+                                        @L[$"{period.Description}"]
+                                    </SelectItem>
+                                }
+                            }
+                        </Select>
                     </Field>
                 </Validations>
             </ModalBody>

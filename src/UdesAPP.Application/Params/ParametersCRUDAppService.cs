@@ -7,19 +7,19 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
-namespace UdesAPP.Teachers
+namespace UdesAPP.Params
 {
-    public class TeachersCRUIDAppService :
+    public class ParametersCRUDAppService :
         CrudAppService<
-            Teacher,
-            TeacherDto,
+            Param,
+            ParametersDto,
             int,
             PagedAndSortedResultRequestDto,
-            TeacherDto>,
-        ITeachersCRUIDAppService
+            ParametersDto>,
+        IParametersCRUDAppService
     {
-        public TeachersCRUIDAppService(IRepository<Teacher, int> repository) 
-            : base(repository)
+        public ParametersCRUDAppService(IRepository<Param, int> repository) : 
+            base(repository)
         {
         }
     }

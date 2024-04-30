@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UdesAPP.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace UdesAPP.Migrations
 {
     [DbContext(typeof(UdesAPPDbContext))]
-    partial class UdesAPPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240429225915_Created_Parameter_Entity")]
+    partial class Created_Parameter_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,22 +63,22 @@ namespace UdesAPP.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<int>("NumberOfPages")
+                    b.Property<int?>("NumberOfPages")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfSentences")
+                    b.Property<int?>("NumberOfSentences")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfTopics")
+                    b.Property<int?>("NumberOfTopics")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfWords")
+                    b.Property<int?>("NumberOfWords")
                         .HasColumnType("int");
 
-                    b.Property<int>("Program")
+                    b.Property<int?>("Program")
                         .HasColumnType("int");
 
-                    b.Property<int>("Serie")
+                    b.Property<int?>("Serie")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -143,7 +146,7 @@ namespace UdesAPP.Migrations
                     b.ToTable("AppClasses", (string)null);
                 });
 
-            modelBuilder.Entity("UdesAPP.Params.Param", b =>
+            modelBuilder.Entity("UdesAPP.Parameters.Parameter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -182,30 +185,35 @@ namespace UdesAPP.Migrations
                     b.Property<int>("ParamCode")
                         .HasColumnType("int");
 
-                    b.Property<string>("ParamDescription")
+                    b.Property<string>("ParamDecription")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("ParamValue1")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("ParamValue2")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("ParamValue3")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("ParamValue4")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("ParamValue5")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("Paramtype")
                         .IsRequired()

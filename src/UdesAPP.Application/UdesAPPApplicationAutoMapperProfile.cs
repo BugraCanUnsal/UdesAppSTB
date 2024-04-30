@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
+using UdesAPP.Books;
 using UdesAPP.Classes;
 using UdesAPP.Dtos;
+using UdesAPP.Params;
 using UdesAPP.Payments;
 using UdesAPP.Periods;
 using UdesAPP.Students;
@@ -29,5 +31,9 @@ public class UdesAPPApplicationAutoMapperProfile : Profile
         CreateMap<TeacherDto, Teacher>();
         CreateMap<Payment, PaymentDto>();
         CreateMap<PaymentDto, Payment>();
+        CreateMap<Param, ParametersDto>();
+        CreateMap<ParametersDto, Param>();      
+        CreateMap<Book, BooksDto>();      
+        CreateMap<BooksDto, Book>();      
     }
 }

@@ -20,6 +20,7 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Acme.UdesAPP;
 using UdesAPP.Payments;
+using UdesAPP.Params;
 
 namespace UdesAPP.EntityFrameworkCore;
 
@@ -65,6 +66,7 @@ public class UdesAPPDbContext :
     public DbSet<Teacher> Teachers { get; set; }
     public DbSet<Period> Periods { get; set; }
     public DbSet<Payment> Payments {  get; set; }  
+    public DbSet<Param> Parameters {  get; set; }  
 
     #endregion
 
@@ -122,12 +124,6 @@ public class UdesAPPDbContext :
                 UdesAPPConsts.DbSchema);
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.Title).HasMaxLength(150);
-            b.Property(x => x.Serie).IsRequired(false);
-            b.Property(x => x.Program).IsRequired(false);
-            b.Property(x => x.NumberOfPages).IsRequired(false);
-            b.Property(x => x.NumberOfTopics).IsRequired(false);
-            b.Property(x => x.NumberOfSentences).IsRequired(false);
-            b.Property(x => x.NumberOfWords).IsRequired(false);
         });
         
         builder.Entity<Class>(b =>
@@ -173,6 +169,20 @@ public class UdesAPPDbContext :
             b.Property(x => x.StudentSurname).HasMaxLength(128);
             b.Property(x => x.HourBalance).IsRequired(false);
             b.Property(x => x.FeeBalance).IsRequired(false);
+        });
+
+        builder.Entity<Param>(b =>
+        {
+            b.ToTable(UdesAPPConsts.DbTablePrefix + "Parameters",
+                UdesAPPConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.Paramtype).HasMaxLength(25);
+            b.Property(x => x.ParamDescription).HasMaxLength(250);
+            b.Property(x => x.ParamValue1).HasMaxLength(50).IsRequired(false);
+            b.Property(x => x.ParamValue2).HasMaxLength(50).IsRequired(false);
+            b.Property(x => x.ParamValue3).HasMaxLength(50).IsRequired(false);
+            b.Property(x => x.ParamValue4).HasMaxLength(50).IsRequired(false);
+            b.Property(x => x.ParamValue5).HasMaxLength(50).IsRequired(false);
         });
     }
 }

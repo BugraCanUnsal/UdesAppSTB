@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Application.Dtos;
 
 namespace UdesAPP.Books
 {
-    public class Book : AuditedAggregateRoot<int>
+    public class BooksDto : AuditedEntityDto<int>
     {
-        public string Title { get; set; }
+        public string Title { get; set; } 
         public int Serie { get; set; }
         public int Program { get; set; }
         public int NumberOfPages { get; set; }

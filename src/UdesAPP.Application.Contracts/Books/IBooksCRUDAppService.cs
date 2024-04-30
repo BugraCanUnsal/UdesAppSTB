@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
-namespace UdesAPP.Payments
+namespace UdesAPP.Books
 {
-    public interface IPaymentsCRUIDAppService : IApplicationService,
+    public interface IBooksCRUDAppService : IApplicationService,
         ICrudAppService<
-            PaymentDto,
+            BooksDto,
             int,
             PagedAndSortedResultRequestDto,
-            PaymentDto>
+            BooksDto>
     {
+        Task<List<BooksDto>> GetAllBooksAsync();
     }
 }

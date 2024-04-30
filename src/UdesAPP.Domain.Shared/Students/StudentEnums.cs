@@ -12,7 +12,7 @@ namespace UdesAPP.Students
     public enum StudentType
     {
         Belirsiz = 0,
-        Sınıf = 1,
+        Grup = 1,
         Özel = 2        
     }
 }

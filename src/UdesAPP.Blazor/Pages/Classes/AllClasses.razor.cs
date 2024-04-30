@@ -6,24 +6,35 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UdesAPP.Books;
 using UdesAPP.Classes;
 using UdesAPP.Dtos;
 using UdesAPP.Periods;
+using UdesAPP.Teachers;
+using Volo.Abp.Application.Dtos;
 using static Microsoft.AspNetCore.Components.NavigationManager;
 
 namespace UdesAPP.Blazor.Pages.Classes
 {
     public partial class AllClasses(
         StudentsOfClassesAppService studentsOfClassesAppService,
+        TeachersCRUDAppService teachersCRUDAppService,
+        BooksCRUDAppService booksCRUDAppService,
         PeriodsAppService periodsAppService,
         NavigationManager navigationManager)
     {
         [Parameter]
         public List<PeriodDto>? PeriodDtos { get; set; }
+        [Parameter]
+        public List<TeacherDto> TeachersDtos { get; set; }
+        [Parameter]
+        public List<BooksDto>? BooksDtos { get; set; }        
         public bool Loaded { get; set; } = false;
         private List<StudentsOfClassDto> StudentsOfClass {  get; set; }
         private StudentsOfClassesAppService _studentsOfClassesAppService = studentsOfClassesAppService;
         private PeriodsAppService _periodsAppService = periodsAppService;
+        private TeachersCRUDAppService _teachersCRUDAppService = teachersCRUDAppService;
+        private BooksCRUDAppService _booksCRUDAppService = booksCRUDAppService;
         private Validations EditValidationsRef;
         private StudentsOfClassDto DeletingFromClassStudent = new StudentsOfClassDto();
         private Modal DeleteStudentFromClassModal { get; set; }
@@ -36,6 +47,8 @@ namespace UdesAPP.Blazor.Pages.Classes
         protected override async Task OnParametersSetAsync()
         {
             PeriodDtos = await _periodsAppService.GetAllPeriods();
+            BooksDtos = await _booksCRUDAppService.GetAllBooksAsync();
+            TeachersDtos = await _teachersCRUDAppService.GetAllTeachersAsync();
             Loaded = true;
             await base.OnParametersSetAsync();
         }
