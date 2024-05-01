@@ -101,5 +101,31 @@ namespace UdesAPP.Repositories
                 await _paymentRepository.DeleteAsync(payment);
             }            
         }
+        public async Task EnrollForStudent(
+            int studentId,
+            int lesson)
+        {
+            List<Payment> payments = await _paymentRepository.GetListAsync();
+            List<Student> students = await _studentRepository.GetListAsync();
+
+            Payment payment = payments.Find(x => x.StudentId == studentId);
+            Student student = students.Find(x => x.Id == studentId);
+
+            if (payment != null && student != null)
+            {                
+                payment.HourBalance -= lesson;
+               
+                switch ((int)student.Type)
+                {
+                    case 1:
+                        payment.FeeBalance -= lesson * student.GroupLessonFee;
+                        break;
+                    case 2:
+                        payment.FeeBalance -= lesson * student.IndividualLessonFee;
+                        break;                    
+                }
+            }
+            Payment updatedPayment = await _paymentRepository.UpdateAsync(payment);
+        }
     }
 }

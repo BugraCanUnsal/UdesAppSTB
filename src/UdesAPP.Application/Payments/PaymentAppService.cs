@@ -25,6 +25,11 @@ namespace UdesAPP.Payments
             await _paymentsManager.DeletePaymentById(paymentId);
         }
 
+        public Task EnrollForStudent(int studentId, int lessons)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<PaymentDto> EnterHourBalanceByIdModal(int paymentId, int? hourBalance)
         {
             Payment payment = await _paymentsManager.EnterHourBalanceByIdModal(paymentId, hourBalance);
@@ -35,13 +40,13 @@ namespace UdesAPP.Payments
         {
             return await _paymentsManager.GetActivePaymentByStudentId(studentId);
         }
-        public async Task<PaymentDto> StartPaymentProcess(StudentDto studentDto)
+        public async Task<bool> StartPaymentProcess(StudentDto studentDto)
         {
             List<PaymentsDto> hasActivePaymentProcess = await GetActivePaymentByStudentId(studentDto.Id);
 
-            if (hasActivePaymentProcess != null)
+            if (hasActivePaymentProcess.Count != 0)
             {
-                //bu öğrencinin aktif ödeme planı var
+                return false;
             }
             
             Payment newPayment = await _paymentsManager.InsertActivePaymentProcess(studentDto.Id,
@@ -49,7 +54,7 @@ namespace UdesAPP.Payments
                 studentDto.Surname
                 );
             
-            return ObjectMapper.Map<Payment, PaymentDto>(newPayment);
+            return true;
         }
     }
 }

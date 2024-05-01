@@ -51,6 +51,9 @@
                                                               Text="@L["Sil"]"
                                                               Clicked="() => DeleteEntityAsync(context)"
                                                               ConfirmationMessage="() => GetDeleteConfirmationMessage(context)" />
+                                                <EntityAction TItem="AllClassesDto"
+                                                              Text="@L["Yoklama Gir"]"
+                                                              Clicked="() => OpenEnrollForTheClassModal(context)" />
                                             </EntityActions>
                                         </DisplayTemplate>
                                     </DataGridEntityActionsColumn>
@@ -322,6 +325,37 @@
                         PreventDefaultOnSubmit="true"
                         Clicked="DeleteStudentFromClassAsync">
                     @L["Çıkar"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="@EnrollForTheClassModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EnrollForTheClassDto.ClassName</ModalTitle>
+                <CloseButton Clicked="CloseEnrollForTheClassModal" />
+            </ModalHeader>
+            <ModalBody>
+                Ders miktarını giriniz.
+                <Field>
+                    <FieldLabel>@L["Ders Miktarı"]</FieldLabel>
+                    <NumericEdit @bind-Value="@Lessons" />
+                </Field>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEnrollForTheClassModal">
+                    @L["İptal"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="() => EnrollForTheClass(EnrollForTheClassDto.Id, Lessons)">
+                    @L["Yoklama Gir"]
                 </Button>
             </ModalFooter>
         </Form>

@@ -96,8 +96,6 @@ public class UdesAPPMenuContributor : IMenuContributor
                  url: "/books"
                 ));
 
-
-
         if (MultiTenancyConsts.IsEnabled)
         {
             administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);

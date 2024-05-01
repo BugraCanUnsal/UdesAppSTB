@@ -12,5 +12,6 @@ namespace UdesAPP.Classes
     {
         Task<List<StudentsOfClassDto>> GetStudentsByClassId(int classId);
         Task<bool> DeleteStudentFromClass(StudentsOfClassDto deletingStudent);
+        Task EnrollOfTheClass(int classId, int lessons);
     }
 }

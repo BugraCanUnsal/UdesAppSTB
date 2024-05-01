@@ -67,6 +67,7 @@ public class UdesAPPDbContext :
     public DbSet<Period> Periods { get; set; }
     public DbSet<Payment> Payments {  get; set; }  
     public DbSet<Param> Parameters {  get; set; }  
+    public DbSet<PotentialStudent> PotentialStudents {  get; set; }  
 
     #endregion
 
@@ -183,6 +184,18 @@ public class UdesAPPDbContext :
             b.Property(x => x.ParamValue3).HasMaxLength(50).IsRequired(false);
             b.Property(x => x.ParamValue4).HasMaxLength(50).IsRequired(false);
             b.Property(x => x.ParamValue5).HasMaxLength(50).IsRequired(false);
+        });
+        
+        builder.Entity<PotentialStudent>(b =>
+        {
+            b.ToTable(UdesAPPConsts.DbTablePrefix + "PotentialStudents",
+                UdesAPPConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.StudentName).HasMaxLength(128);
+            b.Property(x => x.StudentSurname).HasMaxLength(128);
+            b.Property(x => x.GSM).HasMaxLength(10);
+            b.Property(x => x.EMail).HasMaxLength(70).IsRequired(false);
+            b.Property(x => x.Note).HasMaxLength(300).IsRequired(false);
         });
     }
 }

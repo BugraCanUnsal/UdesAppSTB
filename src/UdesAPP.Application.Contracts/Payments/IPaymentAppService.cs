@@ -11,8 +11,9 @@ namespace UdesAPP.Payments
     public interface IPaymentAppService : IApplicationService
     {
         Task<List<PaymentsDto>> GetActivePaymentByStudentId(int studentId);
-        Task<PaymentDto> StartPaymentProcess (StudentDto student);
+        Task<bool> StartPaymentProcess (StudentDto student);
         Task<PaymentDto> EnterHourBalanceByIdModal(int paymentId, int? hourBalance);
         Task DeletePaymentById(int paymentId);
+        Task EnrollForStudent(int studentId, int lessons);
     }
 }

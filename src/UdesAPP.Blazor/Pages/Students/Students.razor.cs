@@ -19,14 +19,8 @@ namespace UdesAPP.Blazor.Pages.Students
         public bool Loaded { get; set; } = false;
         public async Task StartPaymentProcess(StudentDto context)
         {
-            PaymentDto isInserted = await paymentAppService.StartPaymentProcess(context);
-            if (isInserted != null)
-            {
-                //DÖNEN DEĞER TRUE İSE KAYIT EDİLDİ
-            }
-            else {
-                //FALSE İSE INFO MESAJI
-            }             
+            bool isInserted = await paymentAppService.StartPaymentProcess(context);
+            //popup hazırla
         }
         protected override async Task OnParametersSetAsync()
         {

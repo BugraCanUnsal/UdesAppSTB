@@ -30,6 +30,7 @@ namespace UdesAPP.Blazor.Pages.Classes
         [Parameter]
         public List<BooksDto>? BooksDtos { get; set; }        
         public bool Loaded { get; set; } = false;
+        public int Lessons { get; set; }
         private List<StudentsOfClassDto> StudentsOfClass {  get; set; }
         private StudentsOfClassesAppService _studentsOfClassesAppService = studentsOfClassesAppService;
         private PeriodsAppService _periodsAppService = periodsAppService;
@@ -37,7 +38,9 @@ namespace UdesAPP.Blazor.Pages.Classes
         private BooksCRUDAppService _booksCRUDAppService = booksCRUDAppService;
         private Validations EditValidationsRef;
         private StudentsOfClassDto DeletingFromClassStudent = new StudentsOfClassDto();
+        private AllClassesDto EnrollForTheClassDto = new AllClassesDto();
         private Modal DeleteStudentFromClassModal { get; set; }
+        private Modal EnrollForTheClassModal { get; set; }
         private NavigationManager uriHelper = navigationManager;
 
         public async Task ClassIsClicked(DataGridRowMouseEventArgs<AllClassesDto> clickedClass)
@@ -68,8 +71,21 @@ namespace UdesAPP.Blazor.Pages.Classes
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
             DeleteStudentFromClassModal.Hide();
         }
-
-
-
+        private void OpenEnrollForTheClassModal(AllClassesDto enrollClass)
+        {
+            EditValidationsRef.ClearAll();
+            EnrollForTheClassDto = enrollClass;
+            EnrollForTheClassModal.Show();
+        }
+        private void CloseEnrollForTheClassModal()
+        {
+            EnrollForTheClassModal.Hide();
+        }
+        private async Task EnrollForTheClass(int classId, int lessons)
+        {
+            await _studentsOfClassesAppService.EnrollOfTheClass(classId, lessons);
+            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+            EnrollForTheClassModal.Hide();
+        }
     }
 }

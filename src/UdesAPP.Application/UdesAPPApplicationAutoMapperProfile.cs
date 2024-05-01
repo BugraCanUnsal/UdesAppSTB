@@ -35,5 +35,7 @@ public class UdesAPPApplicationAutoMapperProfile : Profile
         CreateMap<ParametersDto, Param>();      
         CreateMap<Book, BooksDto>();      
         CreateMap<BooksDto, Book>();      
+        CreateMap<PotentialStudent, PotentialStudentsDto>();      
+        CreateMap<PotentialStudentsDto, PotentialStudent>();      
     }
 }

@@ -1,7 +1,272 @@
 ﻿@page "/potentialStudents"
+@using UdesAPP.GeneralEnums
+@using UdesAPP.Localization
+@using Volo.Abp.Application.Dtos
+@using UdesAPP.Students
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Components.Web
+@inject IStringLocalizer<UdesAPPResource> L
+@inject AbpBlazorMessageLocalizerHelper<UdesAPPResource> LH
+@inherits AbpCrudPageBase<IPotentialStudentsCRUDAppService, PotentialStudentsDto, int, PagedAndSortedResultRequestDto,PotentialStudentsDto>
 
-<h3>Potansiyel Öğrenciler</h3>
+<Card>
+    <CardHeader>
+        <Row Class="justify-content">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <h2>@L["Namzet Kayıtları"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <Button Color="Color.Primary"
+                        Clicked="OpenCreateModalAsync">
+                    @L["Yeni Kayıt"]
+                </Button>
+            </Column>
+        </Row>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="PotentialStudentsDto"
+                  Data="Entities"
+                  ReadData="OnDataGridReadAsync"
+                  TotalItems="TotalCount"
+                  ShowPager="true"
+                  PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridEntityActionsColumn TItem="PotentialStudentsDto" @ref="@EntityActionsColumn">
+                    <DisplayTemplate>
+                        <EntityActions TItem="PotentialStudentsDto" EntityActionsColumn="@EntityActionsColumn">
+                            <EntityAction TItem="PotentialStudentsDto"
+                                          Text="@L["Düzenle"]"
+                                          Clicked="() => OpenEditModalAsync(context)" />                            
+                            <EntityAction TItem="PotentialStudentsDto"
+                                          Text="@L["Sil"]"
+                                          Clicked="() => DeleteEntityAsync(context)"
+                                          ConfirmationMessage="() => GetDeleteConfirmationMessage(context)" />
+                        </EntityActions>
+                    </DisplayTemplate>
+                </DataGridEntityActionsColumn>
+                <DataGridColumn TItem="PotentialStudentsDto"
+                                Field="@nameof(PotentialStudentsDto.StudentName)"
+                                Caption="@L["İsim"]"></DataGridColumn>
+                <DataGridColumn TItem="PotentialStudentsDto"
+                                Field="@nameof(PotentialStudentsDto.StudentSurname)"
+                                Caption="@L["Soyadı"]">                    
+                </DataGridColumn>
+                <DataGridColumn TItem="PotentialStudentsDto"
+                                Field="@nameof(PotentialStudentsDto.GSM)"
+                                Caption="@L["Telefon"]">
+                </DataGridColumn>
+                <DataGridColumn TItem="PotentialStudentsDto"
+                                Field="@nameof(PotentialStudentsDto.EMail)"
+                                Caption="@L["Email"]">
+                </DataGridColumn>
+                <DataGridCheckColumn TItem="PotentialStudentsDto"
+                                     Field="@nameof(PotentialStudentsDto.PotGroup)"
+                                     Caption="@L["Grup"]">
+                </DataGridCheckColumn>
+                <DataGridCheckColumn TItem="PotentialStudentsDto"
+                                     Field="@nameof(PotentialStudentsDto.PotIndividual)"
+                                     Caption="@L["Özel"]">
+                </DataGridCheckColumn>
+                <DataGridCheckColumn TItem="PotentialStudentsDto"
+                                     Field="@nameof(PotentialStudentsDto.WeekDays)"
+                                     Caption="@L["Hafta İçi"]">
+                </DataGridCheckColumn>
+                <DataGridCheckColumn TItem="PotentialStudentsDto"
+                                     Field="@nameof(PotentialStudentsDto.Weekends)"
+                                     Caption="@L["Hafta Sonu"]">
+                </DataGridCheckColumn>
+                <DataGridColumn TItem="PotentialStudentsDto"
+                                Field="@nameof(PotentialStudentsDto.GroupLessonFee)"
+                                Caption="@L["Grup Ders Ücreti"]">
+                </DataGridColumn>
+                <DataGridColumn TItem="PotentialStudentsDto"
+                                Field="@nameof(PotentialStudentsDto.IndividualLessonFee)"
+                                Caption="@L["Özel Ders Ücreti"]">
+                </DataGridColumn>
+                <DataGridColumn TItem="PotentialStudentsDto"
+                                Field="@nameof(PotentialStudentsDto.CreationTime)"
+                                Caption="@L["Kayıt Tarihi"]">
+                    <DisplayTemplate>
+                        @context.CreationTime.ToShortDateString()
+                    </DisplayTemplate>
+                </DataGridColumn>
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
 
-@code {
+<Modal @ref="@CreateModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@L["Yeni Kayıt"]</ModalTitle>
+                <CloseButton Clicked="CloseCreateModalAsync"/>
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["İsim"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewEntity.StudentName">
+                                <Feedback>
+                                    <ValidationError/>
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Soyadı"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewEntity.StudentSurname">
+                                <Feedback>
+                                    <ValidationError/>
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["GSM"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewEntity.GSM">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Field>
+                        <FieldLabel>@L["Email"]</FieldLabel>
+                        <TextEdit @bind-Text="@NewEntity.EMail">
+                        </TextEdit>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Not"]</FieldLabel>
+                        <MemoEdit Rows="5" @bind-Text="@NewEntity.Note">
+                        </MemoEdit>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Grup"]</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="NewEntity.PotGroup" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Özel"]</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="NewEntity.PotIndividual" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Hafta İçi"]</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="NewEntity.WeekDays" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Hafta Sonu"]</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="NewEntity.Weekends" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Grup Ders Ücreti"]</FieldLabel>
+                        <NumericEdit TValue="int" @bind-Value="NewEntity.GroupLessonFee"/>
+                    </Field> 
+                    <Field>
+                        <FieldLabel>@L["Özel Ders Ücreti"]</FieldLabel>
+                        <NumericEdit TValue="int" @bind-Value="NewEntity.IndividualLessonFee" />
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseCreateModalAsync">@L["İptal"]</Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="CreateEntityAsync">@L["Kaydet"]</Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
 
-}
+<Modal @ref="@EditModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingEntity.StudentName @EditingEntity.StudentSurname</ModalTitle>
+                <CloseButton Clicked="CloseEditModalAsync"/>
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["İsim"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingEntity.StudentName">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Soyadı"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingEntity.StudentSurname">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["GSM"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingEntity.GSM">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Field>
+                        <FieldLabel>@L["Email"]</FieldLabel>
+                        <TextEdit @bind-Text="@EditingEntity.EMail">
+                        </TextEdit>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Not"]</FieldLabel>
+                        <MemoEdit Rows="5" @bind-Text="@EditingEntity.Note">
+                        </MemoEdit>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Grup"]</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="EditingEntity.PotGroup" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Özel"]</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="EditingEntity.PotIndividual" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Hafta İçi"]</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="EditingEntity.WeekDays" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Hafta Sonu"]</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="EditingEntity.Weekends" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Grup Ders Ücreti"]</FieldLabel>
+                        <NumericEdit TValue="int" @bind-Value="EditingEntity.GroupLessonFee" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Özel Ders Ücreti"]</FieldLabel>
+                        <NumericEdit TValue="int" @bind-Value="EditingEntity.IndividualLessonFee" />
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditModalAsync">@L["İptal"]</Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="UpdateEntityAsync">@L["Kaydet"]</Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
