@@ -7,6 +7,7 @@ using Volo.Abp.PermissionManagement;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.Auditing;
 
 namespace UdesAPP;
 
@@ -33,6 +34,10 @@ public class UdesAPPHttpApiClientModule : AbpModule
         Configure<AbpVirtualFileSystemOptions>(options =>
         {
             options.FileSets.AddEmbedded<UdesAPPHttpApiClientModule>();
+        });
+        Configure<AbpAuditingOptions>(options =>
+        {
+            options.EntityHistorySelectors.AddAllEntities();
         });
     }
 }

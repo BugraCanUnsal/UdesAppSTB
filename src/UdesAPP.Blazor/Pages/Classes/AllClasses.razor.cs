@@ -3,6 +3,7 @@ using Blazorise.DataGrid;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.JSInterop;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,7 +31,8 @@ namespace UdesAPP.Blazor.Pages.Classes
         [Parameter]
         public List<BooksDto>? BooksDtos { get; set; }        
         public bool Loaded { get; set; } = false;
-        public int Lessons { get; set; }
+        public decimal Lessons { get; set; }
+        public bool WasDone { get; set; }
         private List<StudentsOfClassDto> StudentsOfClass {  get; set; }
         private StudentsOfClassesAppService _studentsOfClassesAppService = studentsOfClassesAppService;
         private PeriodsAppService _periodsAppService = periodsAppService;
@@ -81,10 +83,25 @@ namespace UdesAPP.Blazor.Pages.Classes
         {
             EnrollForTheClassModal.Hide();
         }
-        private async Task EnrollForTheClass(int classId, int lessons)
+        private async Task EnrollForTheClass(int classId,int teacherId, decimal lessons)
         {
-            await _studentsOfClassesAppService.EnrollOfTheClass(classId, lessons);
-            uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+            if (WasDone)
+            {
+                await _teachersCRUDAppService.EnrollForTeacherById(teacherId, lessons);
+            }
+            int response = await _studentsOfClassesAppService.EnrollOfTheClass(classId, teacherId, lessons);
+            if (response == 0)
+            {
+                Message.Success("Yoklama başarılı bir şekilde girildi.");
+            }
+            else if (response == -1)
+            {
+                Message.Error("Sınıfta öğrenci bulunmamaktadır.");
+            }
+            else
+            {
+                Message.Error("Yoklamada girişinde hata oldu.");
+            }
             EnrollForTheClassModal.Hide();
         }
     }

@@ -12,6 +12,7 @@ using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.Auditing;
 
 namespace UdesAPP.EntityFrameworkCore;
 
@@ -49,6 +50,9 @@ public class UdesAPPEntityFrameworkCoreModule : AbpModule
                  * See also UdesAPPMigrationsDbContextFactory for EF Core tooling. */
             options.UseSqlServer();
         });
-
+        Configure<AbpAuditingOptions>(options =>
+        {
+            options.EntityHistorySelectors.AddAllEntities();
+        });
     }
 }

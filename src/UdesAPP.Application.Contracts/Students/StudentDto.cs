@@ -19,8 +19,8 @@ namespace UdesAPP.Students
         public Gender? Gender { get; set; }
         public StudentState IsActive { get; set; }
         public StudentType? Type { get; set; }
-        public int? GroupLessonFee { get; set; }
-        public int? IndividualLessonFee { get; set; }
+        public decimal GroupLessonFee { get; set; }
+        public decimal IndividualLessonFee { get; set; }
         public string? Photograph { get; set; }
     }
 }

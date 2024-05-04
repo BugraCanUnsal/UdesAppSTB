@@ -82,6 +82,10 @@
                         @L[$"{context.Gender}"]
                     </DisplayTemplate>
                 </DataGridColumn>
+                <DataGridColumn TItem="TeacherDto"
+                                Field="@nameof(TeacherDto.Debt)"
+                                Caption="@L["Yoklama Borcu"]">
+                </DataGridColumn>
             </DataGridColumns>
         </DataGrid>
     </CardBody>
@@ -230,6 +234,11 @@
                         <FieldLabel>@L["Mezun Olduğu Bölüm"]</FieldLabel>
                         <TextEdit @bind-Text="@EditingEntity.GraduatedFrom">
                         </TextEdit>
+                    </Field>
+                    <Field>
+                        <FieldLabel>@L["Yoklama Borcu"]</FieldLabel>
+                        <NumericEdit TValue="decimal" @bind-Text="@EditingEntity.Debt">
+                        </NumericEdit>
                     </Field>
                 </Validations>
             </ModalBody>

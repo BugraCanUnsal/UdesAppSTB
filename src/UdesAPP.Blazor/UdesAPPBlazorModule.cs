@@ -43,6 +43,7 @@ using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.Auditing;
 
 namespace UdesAPP.Blazor;
 
@@ -117,7 +118,11 @@ public class UdesAPPBlazorModule : AbpModule
         ConfigureAutoApiControllers();
         ConfigureBlazorise(context);
         ConfigureRouter(context);
-        ConfigureMenu(context);        
+        ConfigureMenu(context);
+        Configure<AbpAuditingOptions>(options =>
+        {
+            options.EntityHistorySelectors.AddAllEntities();
+        });
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)

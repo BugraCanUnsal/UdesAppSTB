@@ -12,7 +12,7 @@ namespace UdesAPP.Payments
     {
         Task<List<PaymentsDto>> GetActivePaymentByStudentId(int studentId);
         Task<bool> StartPaymentProcess (StudentDto student);
-        Task<PaymentDto> EnterHourBalanceByIdModal(int paymentId, int? hourBalance);
+        Task<PaymentDto> EnterHourBalanceByIdModal(int paymentId, decimal hourBalance);
         Task DeletePaymentById(int paymentId);
         Task EnrollForStudent(int studentId, int lessons);
     }

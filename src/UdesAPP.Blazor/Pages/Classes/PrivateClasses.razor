@@ -1,0 +1,88 @@
+﻿@page "/privateStudents"
+@using UdesAPP.GeneralEnums
+@using UdesAPP.Localization
+@using Volo.Abp.Application.Dtos
+@using UdesAPP.Students
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Components.Web
+@inject IStringLocalizer<UdesAPPResource> L
+@inject AbpBlazorMessageLocalizerHelper<UdesAPPResource> LH
+@inherits AbpCrudPageBase<IStudentAppService, StudentDto, int, PagedAndSortedResultRequestDto,CreateUpdateStudentsDto>
+
+<div class="col-sm-6">
+<Card>
+    <CardHeader>
+        <Row Class="justify-content">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <h2>@L["Özel Ders Öğrencileri"]</h2>
+            </Column>
+        </Row>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="StudentDto"
+                  Data="pageStudents"
+                  ReadData="OnInitializedAsync"
+                  TotalItems="TotalCount"
+                  ShowPager="true"
+                  PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridColumn TItem="StudentDto"
+                                Field="@nameof(StudentDto.Id)"
+                                Sortable="false"
+                                Caption="@L["Actions"]">
+                    <DisplayTemplate>
+                        <Dropdown>
+                            <DropdownToggle Color="Color.Primary">
+                                @L["Actions"]
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem Clicked="() => OpenEnrollForTheStudentModal(context)">
+                                    @L["Yoklama Gir"]
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridColumn TItem="StudentDto"
+                                Field="@nameof(StudentDto.Name)"
+                                Caption="@L["Adı"]"></DataGridColumn>
+                <DataGridColumn TItem="StudentDto"
+                                Field="@nameof(StudentDto.Surname)"
+                                Caption="@L["Soyadı"]">
+                </DataGridColumn>
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
+</div>
+
+<Modal @ref="@EnrollForTheStudentModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EnrollStudent.Name</ModalTitle>
+                <CloseButton Clicked="CloseEnrollForTheStudentModal" />
+            </ModalHeader>
+            <ModalBody>
+                Ders miktarını giriniz.
+                <Field>
+                    <FieldLabel>@L["Ders Miktarı"]</FieldLabel>
+                    <NumericEdit @bind-Value="@Lessons" />
+                </Field>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEnrollForTheStudentModal">
+                    @L["İptal"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="() => EnrollForTheStudent(EnrollStudent.Id, Lessons)">
+                    @L["Yoklama Gir"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>

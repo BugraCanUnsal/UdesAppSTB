@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UdesAPP.Dtos;
+using UdesAPP.Payments;
 using UdesAPP.Repositories;
 using UdesAPP.Students;
 using Volo.Abp.Application.Services;
@@ -34,16 +35,35 @@ namespace UdesAPP.Classes
             return await _studentsManager.GetStudentsByClassId(classId);
         }
 
-        public async Task EnrollOfTheClass(int classId, int lessons)
+        public async Task<int> EnrollOfTheClass(int classId,int teacherId, decimal lessons)
         {
             var students = await GetStudentsByClassId(classId);
             if (students.Count > 0 && lessons > 0)
             {
                 foreach (var student in students)
                 {
-                    await _paymentsManager.EnrollForStudent(student.Id, lessons);
+                    Payment payment = await _paymentsManager.EnrollForStudent(student.Id, lessons);
+                    if (payment == null)
+                    {
+                        return student.Id;
+                    }
                 }
-            }            
+            }
+            else
+            {
+                return -1;
+            }
+            return 0;
+        }
+        public async Task EnrollOfTheStudent(int studentId, decimal lessons)
+        {
+            await _paymentsManager.EnrollForStudent(studentId, lessons);
+        }
+
+        public async Task<List<StudentDto>> GetAllPrivateClassStudents()
+        {
+            List<Student> students = await _studentsManager.GetAllPrivateClassStudents();
+            return ObjectMapper.Map<List<Student>, List<StudentDto>>(students);
         }
     }
 }

@@ -11,8 +11,8 @@ namespace UdesAPP.Classes
     public class Class : AuditedAggregateRoot<int>
     {
         public string ClassName { get; set; }
-        public int? TeacherId { get; set; }
-        public int? BookId { get; set; }
-        public int? DaysAndTimesOfWeekId { get; set; }
+        public int TeacherId { get; set; }
+        public int BookId { get; set; }
+        public int DaysAndTimesOfWeekId { get; set; }
     }
 }

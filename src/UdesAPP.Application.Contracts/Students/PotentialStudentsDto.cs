@@ -16,7 +16,7 @@ namespace UdesAPP.Students
         public bool PotIndividual { get; set; }
         public bool WeekDays { get; set; }
         public bool Weekends { get; set; }
-        public int GroupLessonFee { get; set; }
-        public int IndividualLessonFee { get; set; }
+        public decimal GroupLessonFee { get; set; }
+        public decimal IndividualLessonFee { get; set; }
     }
 }

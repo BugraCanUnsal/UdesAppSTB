@@ -11,6 +11,7 @@
     "Menu:AllClasses": "Tüm Sınıflar",
     "Menu:Payments": "Ödemeler",
     "Menu:Books": "Kitaplar",
+    "Menu:PrivateStudents": "Özel Ders Öğrencileri",
     "Welcome": "Welcome",
     "NewStudent": "Öğrenci Ekle",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."

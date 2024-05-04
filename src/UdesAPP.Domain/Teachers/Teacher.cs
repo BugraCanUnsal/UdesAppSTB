@@ -19,5 +19,8 @@ namespace UdesAPP.Teachers
         public DateTime? Birthdate { get; set; }
         public string GraduatedFrom { get; set; }
         public Gender? Gender { get; set; }
+        public decimal GroupLessonFee { get; set; }
+        public decimal IndividualLessonFee { get; set; }
+        public decimal Debt { get; set; }
     }
 }

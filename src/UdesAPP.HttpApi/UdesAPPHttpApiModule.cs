@@ -1,6 +1,7 @@
 ﻿using Localization.Resources.AbpUi;
 using UdesAPP.Localization;
 using Volo.Abp.Account;
+using Volo.Abp.Auditing;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Localization;
@@ -37,5 +38,10 @@ public class UdesAPPHttpApiModule : AbpModule
                     typeof(AbpUiResource)
                 );
         });
+        Configure<AbpAuditingOptions>(options =>
+        {
+            options.EntityHistorySelectors.AddAllEntities();
+        });
     }
+
 }

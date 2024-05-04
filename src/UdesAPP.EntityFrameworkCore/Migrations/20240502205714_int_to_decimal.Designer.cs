@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UdesAPP.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace UdesAPP.Migrations
 {
     [DbContext(typeof(UdesAPPDbContext))]
-    partial class UdesAPPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240502205714_int_to_decimal")]
+    partial class int_to_decimal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,7 +99,7 @@ namespace UdesAPP.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BookId")
+                    b.Property<int?>("BookId")
                         .HasColumnType("int");
 
                     b.Property<string>("ClassName")
@@ -119,7 +122,7 @@ namespace UdesAPP.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
-                    b.Property<int>("DaysAndTimesOfWeekId")
+                    b.Property<int?>("DaysAndTimesOfWeekId")
                         .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
@@ -135,7 +138,7 @@ namespace UdesAPP.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<int>("TeacherId")
+                    b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -528,9 +531,6 @@ namespace UdesAPP.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
-                    b.Property<decimal>("Debt")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
@@ -550,12 +550,6 @@ namespace UdesAPP.Migrations
                     b.Property<string>("GraduatedFrom")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<decimal>("GroupLessonFee")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("IndividualLessonFee")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2")

@@ -114,8 +114,6 @@ public class UdesAPPDbContext :
             b.Property(x => x.Address).IsRequired(false).HasMaxLength(300);
             b.Property(x => x.ClassId).IsRequired(true);
             b.Property(x => x.Type).IsRequired(false);
-            b.Property(x => x.GroupLessonFee).IsRequired(false);
-            b.Property(x => x.IndividualLessonFee).IsRequired(false);
             b.Property(x => x.Photograph).IsRequired(false);
         });
         
@@ -133,9 +131,6 @@ public class UdesAPPDbContext :
                 UdesAPPConsts.DbSchema);
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.ClassName).HasMaxLength(150);
-            b.Property(x => x.TeacherId).IsRequired(false);
-            b.Property(x => x.BookId).IsRequired(false);
-            b.Property(x => x.DaysAndTimesOfWeekId).IsRequired(false);
         });
 
         builder.Entity<Teacher>(b =>
@@ -168,8 +163,6 @@ public class UdesAPPDbContext :
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.StudentName).HasMaxLength(128);
             b.Property(x => x.StudentSurname).HasMaxLength(128);
-            b.Property(x => x.HourBalance).IsRequired(false);
-            b.Property(x => x.FeeBalance).IsRequired(false);
         });
 
         builder.Entity<Param>(b =>

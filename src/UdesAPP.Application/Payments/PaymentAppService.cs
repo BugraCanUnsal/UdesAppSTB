@@ -30,7 +30,7 @@ namespace UdesAPP.Payments
             throw new NotImplementedException();
         }
 
-        public async Task<PaymentDto> EnterHourBalanceByIdModal(int paymentId, int? hourBalance)
+        public async Task<PaymentDto> EnterHourBalanceByIdModal(int paymentId, decimal hourBalance)
         {
             Payment payment = await _paymentsManager.EnterHourBalanceByIdModal(paymentId, hourBalance);
             return ObjectMapper.Map<Payment, PaymentDto>(payment);

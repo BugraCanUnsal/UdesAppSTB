@@ -65,7 +65,7 @@ namespace UdesAPP.Repositories
 
         public async Task<Payment> EnterHourBalanceByIdModal(
             int paymentId,
-            int? hourBalance)
+            decimal hourBalance)
         {
             List<Payment> payments = await _paymentRepository.GetListAsync();
             List<Student> students = await _studentRepository.GetListAsync();
@@ -101,15 +101,16 @@ namespace UdesAPP.Repositories
                 await _paymentRepository.DeleteAsync(payment);
             }            
         }
-        public async Task EnrollForStudent(
+        public async Task<Payment> EnrollForStudent(
             int studentId,
-            int lesson)
+            decimal lesson)
         {
             List<Payment> payments = await _paymentRepository.GetListAsync();
             List<Student> students = await _studentRepository.GetListAsync();
 
             Payment payment = payments.Find(x => x.StudentId == studentId);
             Student student = students.Find(x => x.Id == studentId);
+            Payment updatedPayment = new Payment();
 
             if (payment != null && student != null)
             {                
@@ -125,7 +126,11 @@ namespace UdesAPP.Repositories
                         break;                    
                 }
             }
-            Payment updatedPayment = await _paymentRepository.UpdateAsync(payment);
+            else
+            {
+                return null;
+            }
+            return updatedPayment = await _paymentRepository.UpdateAsync(payment);
         }
     }
 }

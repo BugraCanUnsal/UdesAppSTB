@@ -15,5 +15,6 @@ namespace UdesAPP.Teachers
         TeacherDto> //Used for paging/sorting
     {
         Task<List<TeacherDto>> GetAllTeachersAsync();
+        Task EnrollForTeacherById(int teacherId, decimal lessons);
     }
 }

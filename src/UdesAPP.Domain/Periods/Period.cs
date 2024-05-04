@@ -11,6 +11,6 @@ namespace UdesAPP.Periods
     public class Period : AuditedAggregateRoot<int>
     {
         public string Description { get; set; }
-        public int? HoursPerWeek { get; set; }
+        public int HoursPerWeek { get; set; }
     }
 }

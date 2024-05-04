@@ -345,6 +345,10 @@
                     <FieldLabel>@L["Ders Miktarı"]</FieldLabel>
                     <NumericEdit @bind-Value="@Lessons" />
                 </Field>
+                <Field>
+                    <FieldLabel>@L["Ders yapıldı mı?"]</FieldLabel>
+                    <Check TValue="bool" @bind-Checked="@WasDone" />
+                </Field>
             </ModalBody>
             <ModalFooter>
                 <Button Color="Color.Secondary"
@@ -354,7 +358,7 @@
                 <Button Color="Color.Primary"
                         Type="@ButtonType.Submit"
                         PreventDefaultOnSubmit="true"
-                        Clicked="() => EnrollForTheClass(EnrollForTheClassDto.Id, Lessons)">
+                        Clicked="() => EnrollForTheClass(EnrollForTheClassDto.Id,EnrollForTheClassDto.TeacherId, Lessons)">
                     @L["Yoklama Gir"]
                 </Button>
             </ModalFooter>

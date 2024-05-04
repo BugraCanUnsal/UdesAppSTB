@@ -53,6 +53,12 @@ namespace UdesAPP.Repositories
             }
             return await Task.FromResult(isUpdated);
         }
+        public async Task<List<Student>> GetAllPrivateClassStudents()
+        {
+            var students = await _studentRepository.GetListAsync();
+            var privateClassStudents = students.FindAll(x => x.Type == StudentType.Özel && x.IsActive == StudentState.Aktif);
 
+            return await Task.FromResult(privateClassStudents);
+        }
     }
 }

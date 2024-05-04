@@ -219,11 +219,11 @@
                     </Field>                    
                     <Field>
                         <FieldLabel>@L["Grup Ders Ücreti"]</FieldLabel>
-                        <NumericEdit TValue="int?" @bind-Value="NewEntity.GroupLessonFee"/>
+                        <NumericEdit TValue="decimal" @bind-Value="NewEntity.GroupLessonFee"/>
                     </Field> 
                     <Field>
                         <FieldLabel>@L["Özel Ders Ücreti"]</FieldLabel>
-                        <NumericEdit TValue="int?" @bind-Value="NewEntity.IndividualLessonFee" />
+                        <NumericEdit TValue="decimal" @bind-Value="NewEntity.IndividualLessonFee" />
                     </Field>
                 </Validations>
             </ModalBody>
@@ -337,11 +337,11 @@
                     </Field>
                     <Field>
                         <FieldLabel>@L["Grup Ders Ücreti"]</FieldLabel>
-                        <NumericEdit TValue="int?" @bind-Value="EditingEntity.GroupLessonFee"/>
+                        <NumericEdit TValue="decimal" @bind-Value="EditingEntity.GroupLessonFee"/>
                     </Field>
                     <Field>
                         <FieldLabel>@L["Özel Ders Ücreti"]</FieldLabel>
-                        <NumericEdit TValue="int?" @bind-Value="EditingEntity.IndividualLessonFee"/>
+                        <NumericEdit TValue="decimal" @bind-Value="EditingEntity.IndividualLessonFee"/>
                     </Field>
                 </Validations>
             </ModalBody>

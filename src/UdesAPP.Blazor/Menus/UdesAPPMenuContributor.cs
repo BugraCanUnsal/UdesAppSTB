@@ -61,9 +61,15 @@ public class UdesAPPMenuContributor : IMenuContributor
                 new ApplicationMenuItem(
                     "AllClasses",
                     l["Menu:AllClasses"],
-                    url: "/allClasses"
-                 )
-         ));
+                    url: "/allClasses")
+                 ).AddItem(
+                new ApplicationMenuItem(
+                    "PrivateStudents",
+                    l["Menu:PrivateStudents"],
+                    url: "/privateStudents")
+                )
+        );
+
         context.Menu.AddItem(
             new ApplicationMenuItem(
                 "Teachers",

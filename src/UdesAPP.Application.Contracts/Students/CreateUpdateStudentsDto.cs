@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 using System.Text;
 using UdesAPP.GeneralEnums;
 
@@ -23,8 +24,8 @@ namespace UdesAPP.Students
         [Required]
         public StudentState IsActive { get; set; } = StudentState.Pasif;
         public StudentType? Type { get; set; } = StudentType.Belirsiz;
-        public int? GroupLessonFee { get; set; }
-        public int? IndividualLessonFee { get; set; }
+        public decimal GroupLessonFee { get; set; }
+        public decimal IndividualLessonFee { get; set; }
         public string? Photograph { get; set; }
     }
 }
