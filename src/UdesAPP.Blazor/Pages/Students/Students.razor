@@ -26,13 +26,15 @@
     </CardHeader>
     <CardBody>
         <DataGrid TItem="StudentDto"
-                  Data="Entities"
-                  ReadData="OnDataGridReadAsync"
+                  Data="@StudentDtos"
                   TotalItems="TotalCount"
                   ShowPager="true"
+                  Filterable
+                  FilterMethod="DataGridFilterMethod.Contains"
+                  Responsive
                   PageSize="PageSize">
             <DataGridColumns>
-                <DataGridEntityActionsColumn TItem="StudentDto" @ref="@EntityActionsColumn">
+                <DataGridEntityActionsColumn Filterable="false" TItem="StudentDto" @ref="@EntityActionsColumn">
                     <DisplayTemplate>
                         <EntityActions TItem="StudentDto" EntityActionsColumn="@EntityActionsColumn">
                             <EntityAction TItem="StudentDto"
@@ -75,6 +77,7 @@
                                 Caption="@L["Adres"]">
                 </DataGridColumn> *@
                 <DataGridColumn TItem="StudentDto"
+                                CustomFilter="@OnClassesFilter"
                                 Field="@nameof(StudentDto.ClassId)"
                                 Caption="@L["Sınıfı"]">
                     <DisplayTemplate>

@@ -12,6 +12,7 @@ namespace UdesAPP.Students
         public string GSM { get; set; }
         public string EMail { get; set; }
         public string Note { get; set; }
+        public int BookSerie { get; set; }
         public bool PotGroup { get; set; }
         public bool PotIndividual { get; set; }
         public bool WeekDays { get; set; }

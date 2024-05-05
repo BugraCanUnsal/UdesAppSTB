@@ -22,5 +22,10 @@ namespace UdesAPP.Payments
             : base(repository)
         {
         }
+        public async Task<List<PaymentDto>> GetAllPaymentsAsync()
+        {
+            List<Payment> payments = await Repository.GetListAsync();
+            return ObjectMapper.Map<List<Payment>, List<PaymentDto>>(payments);
+        }
     }
 }

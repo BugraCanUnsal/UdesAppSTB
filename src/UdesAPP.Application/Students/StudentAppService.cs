@@ -24,5 +24,11 @@ namespace UdesAPP.Students
         {
 
         }
+        public async Task<List<StudentDto>> GetAllStudentsAsync()
+        {
+            List<Student> students = await Repository.GetListAsync();
+            return ObjectMapper.Map<List<Student>, List<StudentDto>>(students);
+        }
+
     }
 }

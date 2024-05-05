@@ -19,15 +19,17 @@
     </CardHeader>
     <CardBody>
         <DataGrid TItem="PaymentDto"
-                  Data="Entities"
-                  ReadData="OnDataGridReadAsync"
+                  Data="PaymentDtos"
                   TotalItems="TotalCount"
                   ShowPager="true"
+                  Filterable
+                  Responsive
                   PageSize="PageSize">
             <DataGridColumns>
                 <DataGridColumn TItem="PaymentDto"
                                 Field="@nameof(PaymentDto.Id)"
                                 Sortable="false"
+                                Filterable="false"
                                 Caption="@L["Actions"]">
                     <DisplayTemplate>
                         <Dropdown>

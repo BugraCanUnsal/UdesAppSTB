@@ -22,5 +22,22 @@ namespace UdesAPP.Students
             : base(repository)
         {
         }
+
+        public async Task<List<PotentialStudentsDto>> GetAllPotentialStudentsAsync()
+        {
+            List<PotentialStudent> potentialStudents = await Repository.GetListAsync();
+            return ObjectMapper.Map<List<PotentialStudent>, List<PotentialStudentsDto>>(potentialStudents);
+        }
+
+        public async Task UpdateNoteOfStudent(PotentialStudentsDto potentialStudentsDto)
+        {
+            List<PotentialStudent> potStudents = await Repository.GetListAsync();
+            PotentialStudent student = potStudents.Find(x => x.Id == potentialStudentsDto.Id);
+            if (student != null)
+            {
+                student.Note = potentialStudentsDto.Note;
+                PotentialStudent potentialStudent = await Repository.UpdateAsync(student);
+            }            
+        }
     }
 }

@@ -1,13 +1,17 @@
 ﻿using Blazorise;
 using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UdesAPP.Payments;
 
 namespace UdesAPP.Blazor.Pages.Payments
 {
     public partial class Payments(NavigationManager navigationManager,
-        PaymentAppService paymentAppService)
+        PaymentAppService paymentAppService,
+        PaymentsCRUDAppService paymentsCRUDAppService)
     {
+        [Parameter]
+        public List<PaymentDto> PaymentDtos { get; set; }
         private Validations EditValidationsRef;
         private PaymentDto paymentDto = new PaymentDto();
         private Modal EnterHourBalanceByIdModal { get; set; }
@@ -44,6 +48,11 @@ namespace UdesAPP.Blazor.Pages.Payments
             await paymentAppService.DeletePaymentById(paymentDto.Id);
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
             DeletePaymentByIdModal.Hide();
+        }
+        protected override async Task OnParametersSetAsync()
+        {
+            PaymentDtos = await paymentsCRUDAppService.GetAllPaymentsAsync();
+            await base.OnParametersSetAsync();
         }
     }
 }

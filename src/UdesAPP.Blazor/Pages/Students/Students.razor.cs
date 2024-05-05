@@ -16,6 +16,9 @@ namespace UdesAPP.Blazor.Pages.Students
     {
         [Parameter]
         public List<AllClassesDto>? AllClassesDtos { get; set; }
+        [Parameter]
+        public List<StudentDto> StudentDtos { get; set; }
+
         public bool Loaded { get; set; } = false;
         public async Task StartPaymentProcess(StudentDto context)
         {
@@ -25,8 +28,23 @@ namespace UdesAPP.Blazor.Pages.Students
         protected override async Task OnParametersSetAsync()
         {
             AllClassesDtos = await allClassesAppService.GetAllClassesAsync();
+            StudentDtos = await studentAppService.GetAllStudentsAsync();
             Loaded = true;
             await base.OnParametersSetAsync();
+        }
+        private bool OnClassesFilter(object itemValue, object searchValue)
+        {
+            if (searchValue is string classFilter)
+            {
+                var searchedClass = AllClassesDtos.Find(x => x.Id.ToString() == itemValue?.ToString());
+                if (searchedClass != null)
+                {
+                    return searchedClass.ClassName.ToUpper().Contains(classFilter.ToUpper());
+                }
+                return classFilter == "";
+            }
+
+            return true;
         }
     }
 }
