@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using Volo.Abp.ObjectMapping;
 
 namespace UdesAPP.Classes
 {
+    [Authorize("UdesAPP.HostPermission")]
     public class StudentsOfClassesAppService : ApplicationService, IStudentsOfClassAppService
     {
         private readonly StudentsManager _studentsManager;

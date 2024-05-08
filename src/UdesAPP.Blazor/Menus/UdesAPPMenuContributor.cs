@@ -18,7 +18,7 @@ public class UdesAPPMenuContributor : IMenuContributor
         }
     }
 
-    private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
+    private async Task<Task> ConfigureMainMenuAsync(MenuConfigurationContext context)
     {
         var administration = context.Menu.GetAdministration();
         var l = context.GetLocalizer<UdesAPPResource>();
@@ -34,25 +34,26 @@ public class UdesAPPMenuContributor : IMenuContributor
             )
         );
 
-        context.Menu.AddItem(
-            new ApplicationMenuItem(
-                "Students",
-                l["Menu:Students"],
-                icon: "fa fa-graduation-cap"
-            ).AddItem(
-                new ApplicationMenuItem(
-                    "AllStudents",
-                    l["Menu:AllStudents"],
-                    url: "/students"
-                    )
-                ).AddItem(
-                new ApplicationMenuItem(
-                    "PotentialStudents",
-                    l["Menu:PotentialStudents"],
-                    url: "/potentialStudents"))
-         );
-
-        context.Menu.AddItem(
+        if (await context.IsGrantedAsync("UdesAPP.HostPermission"))
+        {
+            context.Menu.AddItem(
+                        new ApplicationMenuItem(
+                            "Students",
+                            l["Menu:Students"],
+                            icon: "fa fa-graduation-cap"
+                        ).AddItem(
+                            new ApplicationMenuItem(
+                                "AllStudents",
+                                l["Menu:AllStudents"],
+                                url: "/students"
+                                )
+                            ).AddItem(
+                            new ApplicationMenuItem(
+                                "PotentialStudents",
+                                l["Menu:PotentialStudents"],
+                                url: "/potentialStudents"))
+                     );
+            context.Menu.AddItem(
             new ApplicationMenuItem(
                 "Classes",
                 l["Menu:Classes"],
@@ -68,39 +69,43 @@ public class UdesAPPMenuContributor : IMenuContributor
                     l["Menu:PrivateStudents"],
                     url: "/privateStudents")
                 )
-        );
+            );
 
-        context.Menu.AddItem(
-            new ApplicationMenuItem(
-                "Teachers",
-                l["Menu:Teachers"],
-                icon: "fa-solid fa-person-chalkboard",
-                 url: "/teachers"
-                ));
+            context.Menu.AddItem(
+                new ApplicationMenuItem(
+                    "Teachers",
+                    l["Menu:Teachers"],
+                    icon: "fa-solid fa-person-chalkboard",
+                     url: "/teachers"
+                    ));
 
-        context.Menu.AddItem(
-            new ApplicationMenuItem(
-                "Periods",
-                l["Menu:Periods"],
-                icon: "fa-solid fa-arrows-spin",
-                 url: "/periods"
-                ));
+            context.Menu.AddItem(
+                new ApplicationMenuItem(
+                    "Periods",
+                    l["Menu:Periods"],
+                    icon: "fa-solid fa-arrows-spin",
+                     url: "/periods"
+                    ));
 
-        context.Menu.AddItem(
-            new ApplicationMenuItem(
-                "Payments",
-                l["Menu:Payments"],
-                icon: "fa-solid fa-money-check-dollar",
-                 url: "/payments"
-                ));
+            context.Menu.AddItem(
+                new ApplicationMenuItem(
+                    "Payments",
+                    l["Menu:Payments"],
+                    icon: "fa-solid fa-money-check-dollar",
+                     url: "/payments"
+                    ));
 
-        context.Menu.AddItem(
-            new ApplicationMenuItem(
-                "Books",
-                l["Menu:Books"],
-                icon: "fa-solid fa-book",
-                 url: "/books"
-                ));
+            context.Menu.AddItem(
+                new ApplicationMenuItem(
+                    "Books",
+                    l["Menu:Books"],
+                    icon: "fa-solid fa-book",
+                     url: "/books"
+                    ));
+        }
+        
+
+        
 
         if (MultiTenancyConsts.IsEnabled)
         {

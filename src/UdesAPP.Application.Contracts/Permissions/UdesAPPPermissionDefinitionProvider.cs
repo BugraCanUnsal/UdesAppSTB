@@ -10,7 +10,7 @@ public class UdesAPPPermissionDefinitionProvider : PermissionDefinitionProvider
     {
         var myGroup = context.AddGroup(UdesAPPPermissions.GroupName);
         //Define your own permissions here. Example:
-        //myGroup.AddPermission(UdesAPPPermissions.MyPermission1, L("Permission:MyPermission1"));
+        myGroup.AddPermission(UdesAPPPermissions.HostPermission, L("Permission:HostPermission"));
     }
 
     private static LocalizableString L(string name)
