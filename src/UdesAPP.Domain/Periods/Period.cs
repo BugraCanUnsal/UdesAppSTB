@@ -8,7 +8,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace UdesAPP.Periods
 {
-    public class Period : AuditedAggregateRoot<int>
+    public class Period : AuditedAggregateRoot<Guid>
     {
         public string Description { get; set; }
         public int HoursPerWeek { get; set; }

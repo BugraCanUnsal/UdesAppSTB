@@ -22,23 +22,23 @@ namespace UdesAPP.Payments
             _paymentsManager = paymentsManager;
         }
 
-        public async Task DeletePaymentById(int paymentId)
+        public async Task DeletePaymentById(Guid paymentId)
         {
             await _paymentsManager.DeletePaymentById(paymentId);
         }
 
-        public Task EnrollForStudent(int studentId, int lessons)
+        public Task EnrollForStudent(Guid studentId, Guid lessons)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<PaymentDto> EnterHourBalanceByIdModal(int paymentId, decimal hourBalance)
+        public async Task<PaymentDto> EnterHourBalanceByIdModal(Guid paymentId, decimal hourBalance)
         {
             Payment payment = await _paymentsManager.EnterHourBalanceByIdModal(paymentId, hourBalance);
             return ObjectMapper.Map<Payment, PaymentDto>(payment);
         }
 
-        public async Task<List<PaymentsDto>> GetActivePaymentByStudentId(int studentId)
+        public async Task<List<PaymentsDto>> GetActivePaymentByStudentId(Guid studentId)
         {
             return await _paymentsManager.GetActivePaymentByStudentId(studentId);
         }

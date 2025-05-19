@@ -10,11 +10,11 @@ namespace UdesAPP.Teachers
     public interface ITeachersCRUDAppService : IApplicationService,
         ICrudAppService< //Defines CRUD methods
         TeacherDto, //Used to show books
-        int, //Primary key of the book entity
+        Guid, //Primary key of the book entity
         PagedAndSortedResultRequestDto,
         TeacherDto> //Used for paging/sorting
     {
         Task<List<TeacherDto>> GetAllTeachersAsync();
-        Task EnrollForTeacherById(int teacherId, decimal lessons);
+        Task EnrollForTeacherById(Guid teacherId, decimal lessons);
     }
 }

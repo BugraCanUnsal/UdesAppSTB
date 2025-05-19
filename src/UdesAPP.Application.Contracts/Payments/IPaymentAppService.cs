@@ -10,10 +10,10 @@ namespace UdesAPP.Payments
 {
     public interface IPaymentAppService : IApplicationService
     {
-        Task<List<PaymentsDto>> GetActivePaymentByStudentId(int studentId);
+        Task<List<PaymentsDto>> GetActivePaymentByStudentId(Guid studentId);
         Task<bool> StartPaymentProcess (StudentDto student);
-        Task<PaymentDto> EnterHourBalanceByIdModal(int paymentId, decimal hourBalance);
-        Task DeletePaymentById(int paymentId);
-        Task EnrollForStudent(int studentId, int lessons);
+        Task<PaymentDto> EnterHourBalanceByIdModal(Guid paymentId, decimal hourBalance);
+        Task DeletePaymentById(Guid paymentId);
+        Task EnrollForStudent(Guid studentId, Guid lessons);
     }
 }

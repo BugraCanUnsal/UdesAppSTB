@@ -9,7 +9,7 @@ namespace UdesAPP.Params
     public interface IParametersCRUDAppService : IApplicationService,
         ICrudAppService<
             ParametersDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             ParametersDto>
     {

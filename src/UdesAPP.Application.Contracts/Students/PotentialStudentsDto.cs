@@ -5,7 +5,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace UdesAPP.Students
 {
-    public class PotentialStudentsDto : AuditedEntityDto<int>
+    public class PotentialStudentsDto : AuditedEntityDto<Guid>
     {
         public string StudentName { get; set; }
         public string StudentSurname { get; set; }

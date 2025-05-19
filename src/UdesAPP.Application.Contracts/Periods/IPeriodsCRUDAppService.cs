@@ -11,7 +11,7 @@ namespace UdesAPP.Periods
     public interface IPeriodsCRUDAppService : IApplicationService,
         ICrudAppService< //Defines CRUD methods
         PeriodsDto, //Used to show classes
-        int, //Primary key of the class entity
+        Guid, //Primary key of the class entity
         PagedAndSortedResultRequestDto, //Used for paging/sorting
         PeriodsDto>
     {

@@ -7,7 +7,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace UdesAPP.Teachers
 {
-    public class TeacherDto : AuditedEntityDto<int>
+    public class TeacherDto : AuditedEntityDto<Guid>
     {
         public string Name { get; set; }
         public string Surname { get; set; }

@@ -7,7 +7,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace UdesAPP.Params
 {
-    public class Param : AuditedAggregateRoot<int>
+    public class Param : AuditedAggregateRoot<Guid>
     {
         public string Paramtype { get; set; }
         public int ParamCode { get; set; }

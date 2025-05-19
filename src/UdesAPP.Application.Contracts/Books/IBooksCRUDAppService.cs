@@ -10,7 +10,7 @@ namespace UdesAPP.Books
     public interface IBooksCRUDAppService : IApplicationService,
         ICrudAppService<
             BooksDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             BooksDto>
     {

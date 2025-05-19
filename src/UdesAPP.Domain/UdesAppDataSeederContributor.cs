@@ -12,9 +12,9 @@ namespace Acme.BookStore;
 public class UdesAppDataSeederContributor
     : IDataSeedContributor, ITransientDependency
 {
-    private readonly IRepository<Student, int> _studentRepository;
+    private readonly IRepository<Student, Guid> _studentRepository;
 
-    public UdesAppDataSeederContributor(IRepository<Student, int> studentRepository)
+    public UdesAppDataSeederContributor(IRepository<Student, Guid> studentRepository)
     {
         _studentRepository = studentRepository;
     }
@@ -32,7 +32,7 @@ public class UdesAppDataSeederContributor
                     GSM = "5333333333",
                     Email = "hakancam@gmail.com",
                     Address = "Merter/İSTANBUL",
-                    ClassId = 101,
+                    ClassId = Guid.NewGuid(),
                     Gender = Gender.Erkek,
                     IsActive = StudentState.Pasif,
                     Type = StudentType.Belirsiz,
@@ -52,7 +52,7 @@ public class UdesAppDataSeederContributor
                     GSM = "5222222222",
                     Email = "dunyaguzeli@gmail.com",
                     Address = "Bostancı/İSTANBUL",
-                    ClassId = 102,
+                    ClassId = Guid.NewGuid(),
                     Gender = Gender.Kadın,
                     IsActive = StudentState.Aktif,
                     Type = StudentType.Özel,

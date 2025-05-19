@@ -16,13 +16,13 @@ namespace UdesAPP.Classes
         CrudAppService<
             Class,
             AllClassesDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             CreateUpdateAllClassesDto>,
             IAllClassesAppService
     {
         private IRepository<Class> _classRepository;
-        public AllClassesAppService(IRepository<Class, int> repository)
+        public AllClassesAppService(IRepository<Class, Guid> repository)
             : base(repository)
     {
             _classRepository = repository;

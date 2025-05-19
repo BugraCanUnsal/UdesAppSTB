@@ -67,7 +67,9 @@ public class UdesAPPDbContext :
     public DbSet<Period> Periods { get; set; }
     public DbSet<Payment> Payments {  get; set; }  
     public DbSet<Param> Parameters {  get; set; }  
-    public DbSet<PotentialStudent> PotentialStudents {  get; set; }  
+    public DbSet<PotentialStudent> PotentialStudents {  get; set; }
+
+    DbSet<IdentitySession> IIdentityDbContext.Sessions => throw new System.NotImplementedException();
 
     #endregion
 

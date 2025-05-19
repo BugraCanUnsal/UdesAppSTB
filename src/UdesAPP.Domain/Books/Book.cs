@@ -9,7 +9,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace UdesAPP.Books
 {
-    public class Book : AuditedAggregateRoot<int>
+    public class Book : AuditedAggregateRoot<Guid>
     {
         public string Title { get; set; }
         public int Serie { get; set; }

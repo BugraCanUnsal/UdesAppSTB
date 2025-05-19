@@ -15,12 +15,12 @@ namespace UdesAPP.Params
         CrudAppService<
             Param,
             ParametersDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             ParametersDto>,
         IParametersCRUDAppService
     {
-        public ParametersCRUDAppService(IRepository<Param, int> repository) : 
+        public ParametersCRUDAppService(IRepository<Param, Guid> repository) : 
             base(repository)
         {
         }

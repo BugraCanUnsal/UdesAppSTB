@@ -5,7 +5,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace UdesAPP.Books
 {
-    public class BooksDto : AuditedEntityDto<int>
+    public class BooksDto : AuditedEntityDto<Guid>
     {
         public string Title { get; set; } 
         public int Serie { get; set; }

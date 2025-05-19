@@ -1,4 +1,5 @@
-﻿using Blazorise;
+﻿using System;
+using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http.Extensions;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace UdesAPP.Blazor.Pages.Classes
         {
             EnrollForTheStudentModal.Hide();
         }
-        private async Task EnrollForTheStudent(int studentId, decimal lessons)
+        private async Task EnrollForTheStudent(Guid studentId, decimal lessons)
         {
             await _studentsOfClassesAppService.EnrollOfTheStudent(studentId, lessons);
             uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);

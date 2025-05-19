@@ -6,7 +6,7 @@ using Volo.Abp.Uow;
 
 namespace UdesAPP.Periods
 {
-    public class PeriodsDto : AuditedEntityDto<int>
+    public class PeriodsDto : AuditedEntityDto<Guid>
     {
         public string Description { get; set; }
         public int? HoursPerWeek { get; set; }

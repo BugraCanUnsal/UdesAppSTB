@@ -24,7 +24,7 @@ namespace UdesAPP.Repositories
             _studentRepository = studentRepository;
         }
 
-        public async Task<List<PaymentsDto>> GetActivePaymentByStudentId(int studentId)
+        public async Task<List<PaymentsDto>> GetActivePaymentByStudentId(Guid studentId)
         {
             var _payments = await _paymentRepository.GetListAsync();
 
@@ -44,7 +44,7 @@ namespace UdesAPP.Repositories
         }
       
         public async Task<Payment> InsertActivePaymentProcess(
-            int studentId,
+            Guid studentId,
             string studentName,
             string studentSurname)
         {
@@ -64,7 +64,7 @@ namespace UdesAPP.Repositories
         }
 
         public async Task<Payment> EnterHourBalanceByIdModal(
-            int paymentId,
+            Guid paymentId,
             decimal hourBalance)
         {
             List<Payment> payments = await _paymentRepository.GetListAsync();
@@ -92,7 +92,7 @@ namespace UdesAPP.Repositories
             Payment updatedPayment = await _paymentRepository.UpdateAsync(payment);
             return await Task.FromResult(updatedPayment);
         }
-        public async Task DeletePaymentById(int paymentId)
+        public async Task DeletePaymentById(Guid paymentId)
         {
             List<Payment> payments = await _paymentRepository.GetListAsync();
             if (payments != null)
@@ -102,7 +102,7 @@ namespace UdesAPP.Repositories
             }            
         }
         public async Task<Payment> EnrollForStudent(
-            int studentId,
+            Guid studentId,
             decimal lesson)
         {
             List<Payment> payments = await _paymentRepository.GetListAsync();

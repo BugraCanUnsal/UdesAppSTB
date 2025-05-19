@@ -16,12 +16,12 @@ namespace UdesAPP.Students
         CrudAppService<
             Student,
             StudentDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             CreateUpdateStudentsDto>,
         IStudentAppService
     {
-        public StudentAppService(IRepository<Student,int> repository) 
+        public StudentAppService(IRepository<Student,Guid> repository) 
             : base(repository)
         {
 
