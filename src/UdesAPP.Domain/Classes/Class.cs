@@ -8,11 +8,11 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace UdesAPP.Classes
 {
-    public class Class : AuditedAggregateRoot<int>
+    public class Class : AuditedAggregateRoot<Guid>
     {
         public string ClassName { get; set; }
-        public int TeacherId { get; set; }
-        public int BookId { get; set; }
+        public Guid TeacherId { get; set; }
+        public Guid BookId { get; set; }
         public int DaysAndTimesOfWeekId { get; set; }
     }
 }

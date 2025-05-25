@@ -5,11 +5,11 @@ using Volo.Abp.Application.Dtos;
 
 namespace UdesAPP.Classes
 {
-    public class AllClassesDto : AuditedEntityDto<int>
+    public class AllClassesDto : AuditedEntityDto<Guid>
     {
         public string ClassName { get; set; }
-        public int TeacherId { get; set; }
-        public int BookId { get; set; }
+        public Guid TeacherId { get; set; }
+        public Guid BookId { get; set; }
         public int DaysAndTimesOfWeekId { get; set; }
     }
 }

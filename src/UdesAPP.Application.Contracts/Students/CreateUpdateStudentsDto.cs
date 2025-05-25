@@ -19,7 +19,7 @@ namespace UdesAPP.Students
         public string? GSM { get; set; }
         public string? Email { get; set; }
         public string? Address { get; set; }
-        public int ClassId { get; set; }
+        public Guid ClassId { get; set; }
         public Gender? Gender { get; set; }
         [Required]
         public StudentState IsActive { get; set; } = StudentState.Pasif;

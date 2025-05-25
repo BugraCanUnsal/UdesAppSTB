@@ -19,7 +19,7 @@ namespace UdesAPP.Repositories
             _teacherRepository = teacherRepository;
         }
 
-        public async Task EnrollForTeacherById(int teacherId, decimal lesson)
+        public async Task EnrollForTeacherById(Guid teacherId, decimal lesson)
         {
             List<Teacher> teachers = await _teacherRepository.GetListAsync();
 

@@ -27,6 +27,7 @@ public class UdesAPPApplicationAutoMapperProfile : Profile
         CreateMap<AllClassesDto, CreateUpdateAllClassesDto>();
         CreateMap<Student, StudentsOfClassDto>();
         CreateMap<Period, PeriodsDto>();
+        CreateMap<PeriodsDto, Period>();
         CreateMap<Teacher, TeacherDto>();
         CreateMap<TeacherDto, Teacher>();
         CreateMap<Payment, PaymentDto>();

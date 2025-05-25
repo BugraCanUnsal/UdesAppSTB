@@ -10,7 +10,7 @@ namespace UdesAPP.Students
     public interface IPotentialStudentsCRUDAppService : IApplicationService,
         ICrudAppService<
             PotentialStudentsDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             PotentialStudentsDto>
     {

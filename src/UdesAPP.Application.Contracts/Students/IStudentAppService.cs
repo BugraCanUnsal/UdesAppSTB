@@ -10,7 +10,7 @@ namespace UdesAPP.Students
     public interface IStudentAppService : IApplicationService,
         ICrudAppService< //Defines CRUD methods
         StudentDto, //Used to show books
-        int, //Primary key of the book entity
+        Guid, //Primary key of the book entity
         PagedAndSortedResultRequestDto,
         CreateUpdateStudentsDto> //Used for paging/sorting
     {

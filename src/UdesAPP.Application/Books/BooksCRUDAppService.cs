@@ -16,12 +16,12 @@ namespace UdesAPP.Books
         CrudAppService<
             Book,
             BooksDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             BooksDto>,
         IBooksCRUDAppService
     {
-        public BooksCRUDAppService(IRepository<Book, int> repository) 
+        public BooksCRUDAppService(IRepository<Book, Guid> repository) 
             : base(repository)
         {
         }

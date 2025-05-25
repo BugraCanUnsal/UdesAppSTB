@@ -19,18 +19,15 @@ namespace UdesAPP.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("UdesAPP.Books.Book", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -90,14 +87,11 @@ namespace UdesAPP.Migrations
 
             modelBuilder.Entity("UdesAPP.Classes.Class", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ClassName")
                         .IsRequired()
@@ -135,8 +129,8 @@ namespace UdesAPP.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -145,11 +139,8 @@ namespace UdesAPP.Migrations
 
             modelBuilder.Entity("UdesAPP.Params.Param", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -219,11 +210,8 @@ namespace UdesAPP.Migrations
 
             modelBuilder.Entity("UdesAPP.Payments.Payment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -262,8 +250,8 @@ namespace UdesAPP.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("StudentName")
                         .IsRequired()
@@ -282,11 +270,8 @@ namespace UdesAPP.Migrations
 
             modelBuilder.Entity("UdesAPP.Periods.Period", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -331,11 +316,8 @@ namespace UdesAPP.Migrations
 
             modelBuilder.Entity("UdesAPP.Students.PotentialStudent", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("BookSerie")
                         .HasColumnType("int");
@@ -416,11 +398,8 @@ namespace UdesAPP.Migrations
 
             modelBuilder.Entity("UdesAPP.Students.Student", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .HasMaxLength(300)
@@ -429,8 +408,8 @@ namespace UdesAPP.Migrations
                     b.Property<DateTime?>("Birthdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -503,11 +482,8 @@ namespace UdesAPP.Migrations
 
             modelBuilder.Entity("UdesAPP.Teachers.Teacher", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .HasMaxLength(300)
@@ -1040,6 +1016,10 @@ namespace UdesAPP.Migrations
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
 
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
                     b.Property<string>("Description")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -1113,6 +1093,10 @@ namespace UdesAPP.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
 
                     b.Property<int>("EntityVersion")
                         .HasColumnType("int");
@@ -1257,6 +1241,61 @@ namespace UdesAPP.Migrations
                     b.HasIndex("TenantId", "UserId");
 
                     b.ToTable("AbpSecurityLogs", (string)null);
+                });
+
+            modelBuilder.Entity("Volo.Abp.Identity.IdentitySession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ClientId")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("Device")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("DeviceInfo")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<string>("IpAddresses")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<DateTime?>("LastAccessed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SessionId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime>("SignedIn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("TenantId");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Device");
+
+                    b.HasIndex("SessionId");
+
+                    b.HasIndex("TenantId", "UserId");
+
+                    b.ToTable("AbpSessions", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUser", b =>
@@ -1810,40 +1849,10 @@ namespace UdesAPP.Migrations
                     b.Property<DateTime?>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletionTime");
-
                     b.Property<string>("ExtraProperties")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LastModifierId");
 
                     b.Property<string>("Properties")
                         .HasColumnType("nvarchar(max)");
@@ -1969,22 +1978,6 @@ namespace UdesAPP.Migrations
                     b.Property<DateTime?>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletionTime");
-
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
 
@@ -1992,20 +1985,6 @@ namespace UdesAPP.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LastModifierId");
 
                     b.Property<string>("Payload")
                         .HasColumnType("nvarchar(max)");

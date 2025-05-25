@@ -10,7 +10,7 @@ namespace UdesAPP.Payments
     public interface IPaymentsCRUDAppService : IApplicationService,
         ICrudAppService<
             PaymentDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             PaymentDto>
     {

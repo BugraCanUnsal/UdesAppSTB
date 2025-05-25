@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using UdesAPP.Books;
 using UdesAPP.Classes;
 using UdesAPP.Dtos;
 using UdesAPP.Periods;
 using UdesAPP.Students;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 
@@ -17,48 +19,52 @@ namespace UdesAPP.Repositories
     public class StudentsManager : IDomainService
     {
         private readonly IRepository<Student> _studentRepository;
-
-        public StudentsManager(IRepository<Student> studentRepository)
+        private readonly ILogger<StudentsManager> _logger;
+        public StudentsManager(
+            IRepository<Student> studentRepository,
+            ILogger<StudentsManager> logger
+            )
         {
             _studentRepository = studentRepository;
+            _logger = logger;
         }
-
-        public async Task<List<StudentsOfClassDto>> GetStudentsByClassId(int classId)
+        public async Task<List<Student>> GetStudentsByClassId(Guid classId)
         {
-            var students = await _studentRepository.GetListAsync();
-
-            var studentsOfClass = students.FindAll(x => x.ClassId == classId).Select(r => new StudentsOfClassDto()
-            {
-                Id = r.Id,
-                Name = r.Name,
-                Surname = r.Surname
-            }).ToList();
-
-            return await Task.FromResult(studentsOfClass);
+            return await _studentRepository.GetListAsync(x => x.ClassId == classId);
         }
+
         public async Task<bool> DeleteStudentFromClass(Student student)
         {
-            var updatingStudent = await _studentRepository.GetListAsync();
-            Student myStudent = updatingStudent.Find(x => x.Id == student.Id);
-            bool isUpdated = true;
-            if (myStudent != null)
+            try
             {
-                myStudent.ClassId = 0;
-                myStudent.Type = (int)StudentType.Belirsiz;
-                var updatedStudent = await _studentRepository.UpdateAsync(myStudent);
-                if (updatedStudent == null)
-                {
-                    isUpdated = false;
-                }
+                if (student == null)
+                    throw new ArgumentNullException(nameof(student));
+
+                var myStudent = await _studentRepository.GetAsync(x => x.Id == student.Id);
+                
+                myStudent.ClassId = Guid.Empty;
+                myStudent.Type = StudentType.Belirsiz;
+                
+                await _studentRepository.UpdateAsync(myStudent);
+                return true;
             }
-            return await Task.FromResult(isUpdated);
+            catch (EntityNotFoundException)
+            {
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Öğrenci sınıftan silinirken hata oluştu. Öğrenci ID: {StudentId}", student.Id);
+                throw;
+            }
         }
         public async Task<List<Student>> GetAllPrivateClassStudents()
         {
-            var students = await _studentRepository.GetListAsync();
-            var privateClassStudents = students.FindAll(x => x.Type == StudentType.Özel && x.IsActive == StudentState.Aktif);
-
-            return await Task.FromResult(privateClassStudents);
+            return await _studentRepository.GetListAsync(
+                x => x.IsActive == StudentState.Aktif && 
+                     x.Type == StudentType.Özel
+            );
         }
+
     }
 }

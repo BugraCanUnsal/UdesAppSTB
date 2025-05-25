@@ -10,7 +10,7 @@ namespace UdesAPP.Classes
     public interface IAllClassesAppService : IApplicationService,
         ICrudAppService< //Defines CRUD methods
         AllClassesDto, //Used to show classes
-        int, //Primary key of the class entity
+        Guid, //Primary key of the class entity
         PagedAndSortedResultRequestDto, //Used for paging/sorting
         CreateUpdateAllClassesDto>
     {
