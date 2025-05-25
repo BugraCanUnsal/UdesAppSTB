@@ -56,7 +56,7 @@
     </CardBody>
 </Card>
 
-                <Modal @ref="@CreateModal">
+<Modal @ref="@CreateModal">
     <ModalBackdrop />
     <ModalContent IsCentered="true">
         <Form>
@@ -98,15 +98,15 @@
                 <CloseButton Clicked="CloseEditModalAsync"/>
             </ModalHeader>
             <ModalBody>
-                <Validations @ref="@EditValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                <Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
                     <Field>
                         <FieldLabel>@L["Açıklama"]</FieldLabel>
-                        <TextEdit @bind-Text="@NewEntity.Description">
+                        <TextEdit @bind-Text="@EditingEntity.Description">
                         </TextEdit>
                     </Field>
                     <Field>
                         <FieldLabel>@L["Haftalık Saat"]</FieldLabel>
-                        <NumericEdit TValue="int?" @bind-Text="@NewEntity.HoursPerWeek" />
+                        <NumericEdit TValue="int?" @bind-Value="@EditingEntity.HoursPerWeek" />
                     </Field>
                 </Validations>
             </ModalBody>

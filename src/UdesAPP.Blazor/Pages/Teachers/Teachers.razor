@@ -9,6 +9,20 @@
 @inject AbpBlazorMessageLocalizerHelper<UdesAPPResource> LH
 @inherits AbpCrudPageBase<ITeachersCRUDAppService, TeacherDto, Guid, PagedAndSortedResultRequestDto,TeacherDto>
 
+@code
+{
+    private string TeacherName { get; set; }
+    private string TeacherSurname { get; set; }
+    //openeditmodal
+    private Task OpenEditModal(TeacherDto context)
+    {
+        TeacherName = context.Name;
+        TeacherSurname = context.Surname;
+        return OpenEditModalAsync(context);
+    }
+    
+}
+
 <Card>
     <CardHeader>
         <Row Class="justify-content">
@@ -37,7 +51,7 @@
                         <EntityActions TItem="TeacherDto" EntityActionsColumn="@EntityActionsColumn">
                             <EntityAction TItem="TeacherDto"
                                           Text="@L["Düzenle"]"
-                                          Clicked="() => OpenEditModalAsync(context)" />
+                                          Clicked="() => OpenEditModal(context)" />
                             <EntityAction TItem="TeacherDto"
                                           Text="@L["Sil"]"
                                           Clicked="() => DeleteEntityAsync(context)"
@@ -56,7 +70,7 @@
                                 Field="@nameof(TeacherDto.Birthdate)"
                                 Caption="@L["Doğum Tarihi"]">
                     <DisplayTemplate>
-                        @context.Birthdate.Value.ToShortDateString()
+                        @(context.Birthdate.HasValue ? context.Birthdate.Value.ToShortDateString() : "-")
                     </DisplayTemplate>
                 </DataGridColumn>
                 <DataGridColumn TItem="TeacherDto"
@@ -175,11 +189,11 @@
     <ModalContent IsCentered="true">
         <Form>
             <ModalHeader>
-                <ModalTitle>@EditingEntity.Name @EditingEntity.Surname</ModalTitle>
+                <ModalTitle>@TeacherName @TeacherSurname</ModalTitle>
                 <CloseButton Clicked="CloseEditModalAsync"/>
             </ModalHeader>
             <ModalBody>
-                <Validations @ref="@EditValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                <Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["İsim"]</FieldLabel>
@@ -192,7 +206,7 @@
                     </Validation>
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
-                            <FieldLabel>@L["Soyadı"]</FieldLabel>
+                            <FieldLabel>@L["Soy Adı"]</FieldLabel>
                             <TextEdit @bind-Text="@EditingEntity.Surname">
                                 <Feedback>
                                     <ValidationError />
