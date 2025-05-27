@@ -5,7 +5,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace UdesAPP.Params
 {
-    public class ParametersDto : AuditedEntityDto<int>
+    public class ParametersDto : AuditedEntityDto<Guid>
     {
         public string Paramtype { get; set; }
         public int ParamCode { get; set; }

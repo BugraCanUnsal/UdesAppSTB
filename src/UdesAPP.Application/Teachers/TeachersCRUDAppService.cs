@@ -16,13 +16,13 @@ namespace UdesAPP.Teachers
         CrudAppService<
             Teacher,
             TeacherDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             TeacherDto>,
         ITeachersCRUDAppService
     {
         private readonly TeachersManager _teachersManager;
-        public TeachersCRUDAppService(IRepository<Teacher, int> repository, TeachersManager teachersManager) 
+        public TeachersCRUDAppService(IRepository<Teacher, Guid> repository, TeachersManager teachersManager) 
             : base(repository)
         {
             _teachersManager = teachersManager;
@@ -33,7 +33,7 @@ namespace UdesAPP.Teachers
             List<Teacher> teachers = await Repository.GetListAsync();
             return ObjectMapper.Map<List<Teacher>, List<TeacherDto>>(teachers);
         }
-        public async Task EnrollForTeacherById(int teacherId, decimal lessons)
+        public async Task EnrollForTeacherById(Guid teacherId, decimal lessons)
         {
             await _teachersManager.EnrollForTeacherById(teacherId, lessons);
         }

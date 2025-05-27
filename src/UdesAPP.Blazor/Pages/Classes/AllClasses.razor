@@ -10,7 +10,7 @@
 @using Volo.Abp.AspNetCore.Components.Web
 @inject IStringLocalizer<UdesAPPResource> L
 @inject AbpBlazorMessageLocalizerHelper<UdesAPPResource> LH
-@inherits AbpCrudPageBase<IAllClassesAppService, AllClassesDto, int, PagedAndSortedResultRequestDto,CreateUpdateAllClassesDto>
+@inherits AbpCrudPageBase<IAllClassesAppService, AllClassesDto, Guid, PagedAndSortedResultRequestDto,CreateUpdateAllClassesDto>
 
 
 <div class="demo-card-container">
@@ -174,12 +174,12 @@
                     </Validation>
                     <Field>
                         <FieldLabel>@L["Öğretmen"]</FieldLabel>
-                        <Select TValue="int?" @bind-SelectedValue="@NewEntity.TeacherId">
+                        <Select TValue="Guid?" @bind-SelectedValue="@NewEntity.TeacherId">
                             @if (Loaded)
                             {
                                 @foreach (TeacherDto teacherDto in TeachersDtos)
                                 {
-                                    <SelectItem TValue="int" Value="teacherDto.Id">
+                                    <SelectItem TValue="Guid" Value="teacherDto.Id">
                                         @L[$"{teacherDto.Name} {teacherDto.Surname}"]
                                     </SelectItem>
                                 }
@@ -188,12 +188,12 @@
                     </Field>
                     <Field>
                         <FieldLabel>@L["Kitap"]</FieldLabel>
-                        <Select TValue="int?" @bind-SelectedValue="@NewEntity.BookId">
+                        <Select TValue="Guid?" @bind-SelectedValue="@NewEntity.BookId">
                             @if (Loaded)
                             {
                                 @foreach (BooksDto booksDto in BooksDtos)
                                 {
-                                    <SelectItem TValue="int" Value="booksDto.Id">
+                                    <SelectItem TValue="Guid" Value="booksDto.Id">
                                         @L[$"{booksDto.Title}"]
                                     </SelectItem>
                                 }
@@ -207,7 +207,7 @@
                             {
                                 @foreach (PeriodDto period in PeriodDtos)
                                 {
-                                    <SelectItem TValue="int" Value="period.Id">
+                                    <SelectItem TValue="Guid" Value="period.Id">
                                         @L[$"{period.Description}"]
                                     </SelectItem>
                                 }
@@ -250,12 +250,12 @@
                     </Validation>
                     <Field>
                         <FieldLabel>@L["Öğretmen"]</FieldLabel>
-                        <Select TValue="int?" @bind-SelectedValue="@EditingEntity.TeacherId">
+                        <Select TValue="Guid?" @bind-SelectedValue="@EditingEntity.TeacherId">
                             @if (Loaded)
                             {
                                 @foreach (TeacherDto teacherDto in TeachersDtos)
                                 {
-                                    <SelectItem TValue="int" Value="teacherDto.Id">
+                                    <SelectItem TValue="Guid" Value="teacherDto.Id">
                                         @L[$"{teacherDto.Name} {teacherDto.Surname}"]
                                     </SelectItem>
                                 }
@@ -264,12 +264,12 @@
                     </Field>
                     <Field>
                         <FieldLabel>@L["Kitap"]</FieldLabel>
-                        <Select TValue="int?" @bind-SelectedValue="@EditingEntity.BookId">
+                        <Select TValue="Guid?" @bind-SelectedValue="@EditingEntity.BookId">
                             @if (Loaded)
                             {
                                 @foreach (BooksDto booksDto in BooksDtos)
                                 {
-                                    <SelectItem TValue="int" Value="booksDto.Id">
+                                    <SelectItem TValue="Guid" Value="booksDto.Id">
                                         @L[$"{booksDto.Title}"]
                                     </SelectItem>
                                 }
@@ -283,7 +283,7 @@
                             {
                                 @foreach (PeriodDto period in PeriodDtos)
                                 {
-                                    <SelectItem TValue="int" Value="period.Id">
+                                    <SelectItem TValue="Guid" Value="period.Id">
                                         @L[$"{period.Description}"]
                                     </SelectItem>
                                 }

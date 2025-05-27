@@ -83,7 +83,7 @@ namespace UdesAPP.Blazor.Pages.Classes
         {
             EnrollForTheClassModal.Hide();
         }
-        private async Task EnrollForTheClass(int classId,int teacherId, decimal lessons)
+        private async Task EnrollForTheClass(Guid classId,Guid teacherId, decimal lessons)
         {
             if (WasDone)
             {

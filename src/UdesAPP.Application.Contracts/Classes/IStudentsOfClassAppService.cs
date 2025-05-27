@@ -10,10 +10,10 @@ namespace UdesAPP.Classes
 {
     public interface IStudentsOfClassAppService : IApplicationService
     {
-        Task<List<StudentsOfClassDto>> GetStudentsByClassId(int classId);
+        Task<List<StudentsOfClassDto>> GetStudentsByClassId(Guid classId);
         Task<bool> DeleteStudentFromClass(StudentsOfClassDto deletingStudent);
-        Task<int> EnrollOfTheClass(int classId,int teacherId, decimal lessons);
+        Task<char> EnrollOfTheClass(Guid classId,Guid teacherId, decimal lessons);
         Task<List<StudentDto>> GetAllPrivateClassStudents();
-        Task EnrollOfTheStudent(int studentId, decimal lessons);
+        Task EnrollOfTheStudent(Guid studentId, decimal lessons);
     }
 }

@@ -9,7 +9,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace UdesAPP.Teachers
 {
-    public class Teacher : AuditedAggregateRoot<int>
+    public class Teacher : AuditedAggregateRoot<Guid>
     {
         public string Name { get; set; }
         public string Surname { get; set; }

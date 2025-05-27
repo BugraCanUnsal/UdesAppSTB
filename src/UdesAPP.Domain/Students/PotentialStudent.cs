@@ -7,7 +7,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace UdesAPP.Students
 {
-    public class PotentialStudent : AuditedAggregateRoot<int>
+    public class PotentialStudent : AuditedAggregateRoot<Guid>
     {
         public string StudentName { get; set; }
         public string StudentSurname { get; set; }

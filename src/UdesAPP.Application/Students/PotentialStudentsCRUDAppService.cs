@@ -15,12 +15,12 @@ namespace UdesAPP.Students
         CrudAppService<
             PotentialStudent,
             PotentialStudentsDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             PotentialStudentsDto>,
         IPotentialStudentsCRUDAppService
     {
-        public PotentialStudentsCRUDAppService(IRepository<PotentialStudent, int> repository) 
+        public PotentialStudentsCRUDAppService(IRepository<PotentialStudent, Guid> repository) 
             : base(repository)
         {
         }

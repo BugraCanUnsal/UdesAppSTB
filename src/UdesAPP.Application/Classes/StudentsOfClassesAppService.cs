@@ -14,57 +14,51 @@ using Volo.Abp.ObjectMapping;
 namespace UdesAPP.Classes
 {
     [Authorize("UdesAPP.HostPermission")]
-    public class StudentsOfClassesAppService : ApplicationService, IStudentsOfClassAppService
+    public class StudentsOfClassesAppService(
+        StudentsManager studentsManager,
+        PaymentsManager paymentsManager)
+        : ApplicationService, IStudentsOfClassAppService
     {
-        private readonly StudentsManager _studentsManager;
-        private readonly PaymentsManager _paymentsManager;
-
-        public StudentsOfClassesAppService(StudentsManager studentsManager,
-            PaymentsManager paymentsManager)
-        {
-            _studentsManager = studentsManager;
-            _paymentsManager = paymentsManager;
-        }
-
         public async Task<bool> DeleteStudentFromClass(StudentsOfClassDto deletingStudent)
         {
             var student = ObjectMapper.Map<StudentsOfClassDto, Student>(deletingStudent);
-            return await _studentsManager.DeleteStudentFromClass(student);
+            return await studentsManager.DeleteStudentFromClass(student);
         }
 
-        public async Task<List<StudentsOfClassDto>> GetStudentsByClassId(int classId)
+        public async Task<List<StudentsOfClassDto>> GetStudentsByClassId(Guid classId)
         {
-            return await _studentsManager.GetStudentsByClassId(classId);
+            var students =  await studentsManager.GetStudentsByClassId(classId);
+            return ObjectMapper.Map<List<Student>, List<StudentsOfClassDto>>(students);
         }
 
-        public async Task<int> EnrollOfTheClass(int classId,int teacherId, decimal lessons)
+        public async Task<char> EnrollOfTheClass(Guid classId,Guid teacherId, decimal lessons)
         {
             var students = await GetStudentsByClassId(classId);
             if (students.Count > 0 && lessons > 0)
             {
                 foreach (var student in students)
                 {
-                    Payment payment = await _paymentsManager.EnrollForStudent(student.Id, lessons);
+                    Payment payment = await paymentsManager.EnrollForStudent(student.Id, lessons);
                     if (payment == null)
                     {
-                        return student.Id;
+                        return '0';
                     }
                 }
             }
             else
             {
-                return -1;
+                return '1';
             }
-            return 0;
+            return '2';
         }
-        public async Task EnrollOfTheStudent(int studentId, decimal lessons)
+        public async Task EnrollOfTheStudent(Guid studentId, decimal lessons)
         {
-            await _paymentsManager.EnrollForStudent(studentId, lessons);
+            await paymentsManager.EnrollForStudent(studentId, lessons);
         }
 
         public async Task<List<StudentDto>> GetAllPrivateClassStudents()
         {
-            List<Student> students = await _studentsManager.GetAllPrivateClassStudents();
+            List<Student> students = await studentsManager.GetAllPrivateClassStudents();
             return ObjectMapper.Map<List<Student>, List<StudentDto>>(students);
         }
     }

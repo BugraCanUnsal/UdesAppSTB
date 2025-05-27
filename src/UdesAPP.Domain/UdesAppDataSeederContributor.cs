@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using UdesAPP.Books;
 using UdesAPP.GeneralEnums;
+using UdesAPP.Params;
 using UdesAPP.Students;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
@@ -12,56 +13,85 @@ namespace Acme.BookStore;
 public class UdesAppDataSeederContributor
     : IDataSeedContributor, ITransientDependency
 {
-    private readonly IRepository<Student, int> _studentRepository;
+    private readonly IRepository<Student, Guid> _studentRepository;
+    private readonly IRepository<Param, Guid> _paramRepository;
 
-    public UdesAppDataSeederContributor(IRepository<Student, int> studentRepository)
+    public UdesAppDataSeederContributor(IRepository<Student, Guid> studentRepository, IRepository<Param, Guid> paramRepository)
     {
+        _paramRepository = paramRepository;
         _studentRepository = studentRepository;
     }
 
     public async Task SeedAsync(DataSeedContext context)
     {
-        if (await _studentRepository.GetCountAsync() <= 0)
+        if (await _paramRepository.GetCountAsync() == 0)
         {
-            await _studentRepository.InsertAsync(
-                new Student
-                {
-                    Name = "Hakan",
-                    Surname = "Çam",
-                    Birthdate = new DateTime(1994,03,03),
-                    GSM = "5333333333",
-                    Email = "hakancam@gmail.com",
-                    Address = "Merter/İSTANBUL",
-                    ClassId = 101,
-                    Gender = Gender.Erkek,
-                    IsActive = StudentState.Pasif,
-                    Type = StudentType.Belirsiz,
-                    GroupLessonFee = 270,
-                    IndividualLessonFee = 1600,
-                    Photograph = string.Empty
-                },
-                autoSave: true
-            );
-
-            await _studentRepository.InsertAsync(
-                new Student
-                {
-                    Name = "Dünya",
-                    Surname = "Güzeli",
-                    Birthdate = new DateTime(1975, 02, 02),
-                    GSM = "5222222222",
-                    Email = "dunyaguzeli@gmail.com",
-                    Address = "Bostancı/İSTANBUL",
-                    ClassId = 102,
-                    Gender = Gender.Kadın,
-                    IsActive = StudentState.Aktif,
-                    Type = StudentType.Özel,
-                    GroupLessonFee = 220,
-                    IndividualLessonFee = 1750,
-                    Photograph = string.Empty
-                },
-                autoSave: true
-            );
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "BookSeries",
+                ParamCode = 1,
+                ParamDescription = "Temel İngiliz Dili Serisi"
+            }, autoSave: true);
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "BookSeries",
+                ParamCode = 2,
+                ParamDescription = "Simultane Çeviri Serisi"
+            }, autoSave: true);
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "BookSeries",
+                ParamCode = 3,
+                ParamDescription = "Express Serisi"
+            }, autoSave: true);
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "BookSeries",
+                ParamCode = 4,
+                ParamDescription = "Genel İngilizce"
+            }, autoSave: true);
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "BookSeries",
+                ParamCode = 5,
+                ParamDescription = "İngilizce Sohbet Dili"
+            }, autoSave: true);
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "BookSeries",
+                ParamCode = 6,
+                ParamDescription = "Tiyatral Serisi"
+            }, autoSave: true);
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "BookSeries",
+                ParamCode = 7,
+                ParamDescription = "Karşılaştırmalı İngilizce Serisi"
+            }, autoSave: true);
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "BookSeries",
+                ParamCode = 8,
+                ParamDescription = "Anadili Metoduyla İngilizce Konuşma Serisi"
+            }, autoSave: true);
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "EduPrograms",
+                ParamCode = 1,
+                ParamDescription = "Günlük İngilizce Eğitimi"
+            }, autoSave: true);
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "EduPrograms",
+                ParamCode = 2,
+                ParamDescription = "Profesyonel İş Hayatı İçin İngilizce Eğitimi"
+            }, autoSave: true);
+            await _paramRepository.InsertAsync(new Param
+            {
+                Paramtype = "EduPrograms",
+                ParamCode = 3,
+                ParamDescription = "İngilizce Öğretmenleri ve Çevirmenler İçin İngilizce Eğitimi"
+            }, autoSave: true);
         }
     }
 }

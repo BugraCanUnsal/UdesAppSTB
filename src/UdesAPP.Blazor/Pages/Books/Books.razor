@@ -8,7 +8,15 @@
 @using Volo.Abp.AspNetCore.Components.Web
 @inject IStringLocalizer<UdesAPPResource> L
 @inject AbpBlazorMessageLocalizerHelper<UdesAPPResource> LH
-@inherits AbpCrudPageBase<IBooksCRUDAppService, BooksDto, int, PagedAndSortedResultRequestDto,BooksDto>
+@inject NavigationManager NavigationManager
+@inject ParametersAppService ParametersAppService
+@inherits AbpCrudPageBase<IBooksCRUDAppService, BooksDto, Guid, PagedAndSortedResultRequestDto, BooksDto>
+
+<style>
+    .invalid-feedback {
+        display: block !important;
+    }
+</style>
 
 <Card>
     <CardHeader>
@@ -112,43 +120,43 @@
             </ModalHeader>
             <ModalBody>
                 <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
-                    <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Kitap Adı"]</FieldLabel>
                             <TextEdit @bind-Text="@NewEntity.Title">
                                 <Feedback>
-                                    <ValidationError/>
+                                    <ValidationError />
                                 </Feedback>
                             </TextEdit>
                         </Field>
-                    </Validation>
-                    <Field>
-                        <FieldLabel>@L["Serisi"]</FieldLabel>
-                        <Select TValue="int" @bind-SelectedValue="@NewEntity.Serie">
-                            @if (Loaded)
-                            {
-                                @foreach (ParametersDto paramDto in BookSeriesDto)
+                        <Field>
+                            <FieldLabel>@L["Serisi"]</FieldLabel>
+                            <Select @key="NewEntity.Serie" TValue="int?" SelectedValue="@NewEntity.Serie"  SelectedValueChanged="@(value => OnSerieChanged(value, NewEntity))">
+                                <SelectItem TValue="int?" Value="0">@L["Bir seri seçiniz..."]</SelectItem>
+                                @foreach (var paramDto in BookSeriesDto)
                                 {
-                                    <SelectItem TValue="int" Value="paramDto.ParamCode">
+                                    <SelectItem TValue="int?" Value="paramDto.ParamCode">
                                         @L[$"{paramDto.ParamDescription}"]
                                     </SelectItem>
                                 }
-                            }
-                        </Select>
-                    </Field>
+                            </Select>
+                            <Feedback>
+                                <ValidationError />
+                            </Feedback>
+                        </Field>
                     <Field>
                         <FieldLabel>@L["Eğitim Programı"]</FieldLabel>
-                        <Select TValue="int" @bind-SelectedValue="@NewEntity.Program">
-                            @if (Loaded)
+                        <Select @key="NewEntity.Program" TValue="int?" SelectedValue="@NewEntity.Program" SelectedValueChanged="@(value => OnProgramChanged(value, NewEntity))">
+                            <SelectItem TValue="int?" Value="0">@L["Bir eğitim programı seçiniz..."]</SelectItem>
+                            @foreach (var paramDto in EduProgramDto)
                             {
-                                @foreach (ParametersDto paramDto in EduProgramDto)
-                                {
-                                    <SelectItem TValue="int" Value="paramDto.ParamCode">
-                                        @L[$"{paramDto.ParamDescription}"]
-                                    </SelectItem>
-                                }
+                                <SelectItem TValue="int?" Value="paramDto.ParamCode">
+                                    @L[$"{paramDto.ParamDescription}"]
+                                </SelectItem>
                             }
                         </Select>
+                        <Feedback>
+                            <ValidationError />
+                        </Feedback>
                     </Field>
                     <Field>
                         <FieldLabel>@L["Sayfa Miktarı"]</FieldLabel>
@@ -189,45 +197,36 @@
                 <CloseButton Clicked="CloseEditModalAsync"/>
             </ModalHeader>
             <ModalBody>
-                <Validations @ref="@EditValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
-                    <Validation MessageLocalizer="@LH.Localize">
+                <Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
                         <Field>
                             <FieldLabel>@L["İsim"]</FieldLabel>
                             <TextEdit @bind-Text="@EditingEntity.Title">
-                                <Feedback>
-                                    <ValidationError />
-                                </Feedback>
                             </TextEdit>
                         </Field>
-                    </Validation>
-                    <Field>
-                        <FieldLabel>@L["Serisi"]</FieldLabel>
-                        <Select TValue="int" @bind-SelectedValue="@EditingEntity.Serie">
-                            @if (Loaded)
-                            {
-                                @foreach (ParametersDto paramDto in BookSeriesDto)
+                        <Field>
+                            <FieldLabel>@L["Serisi"]</FieldLabel>
+                            <Select @key="EditingEntity.Serie" TValue="int?" SelectedValue="@EditingEntity.Serie"  SelectedValueChanged="@(value => OnSerieChanged(value, EditingEntity))">
+                                <SelectItem TValue="int?" Value="0">@L["Bir seri seçiniz..."]</SelectItem>
+                                @foreach (var paramDto in BookSeriesDto)
                                 {
-                                    <SelectItem TValue="int" Value="paramDto.ParamCode">
+                                    <SelectItem TValue="int?" Value="paramDto.ParamCode">
                                         @L[$"{paramDto.ParamDescription}"]
                                     </SelectItem>
                                 }
-                            }
-                        </Select>
-                    </Field>
-                    <Field>
-                        <FieldLabel>@L["Eğitim Programı"]</FieldLabel>
-                        <Select TValue="int" @bind-SelectedValue="@EditingEntity.Program">
-                            @if (Loaded)
-                            {
-                                @foreach (ParametersDto paramDto in EduProgramDto)
+                            </Select>
+                        </Field>
+                        <Field>
+                            <FieldLabel>@L["Eğitim Programı"]</FieldLabel>
+                            <Select @key="EditingEntity.Program" TValue="int?" SelectedValue="@EditingEntity.Program" SelectedValueChanged="@(value => OnProgramChanged(value, EditingEntity))">
+                                <SelectItem TValue="int?" Value="0">@L["Bir eğitim programı seçiniz..."]</SelectItem>
+                                @foreach (var paramDto in EduProgramDto)
                                 {
-                                    <SelectItem TValue="int" Value="paramDto.ParamCode">
+                                    <SelectItem TValue="int?" Value="paramDto.ParamCode">
                                         @L[$"{paramDto.ParamDescription}"]
                                     </SelectItem>
                                 }
-                            }
-                        </Select>
-                    </Field>
+                            </Select>
+                        </Field>
                     <Field>
                         <FieldLabel>@L["Sayfa Miktarı"]</FieldLabel>
                         <NumericEdit TValue="int" @bind-Value="EditingEntity.NumberOfPages" />

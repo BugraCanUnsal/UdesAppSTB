@@ -12,7 +12,7 @@ using Volo.Abp.Json.SystemTextJson.JsonConverters;
 
 namespace UdesAPP.Students
 {
-    public class Student : AuditedAggregateRoot<int>
+    public class Student : AuditedAggregateRoot<Guid>
     {
         public required string Name { get; set; }
         public required string Surname { get; set; }
@@ -20,7 +20,7 @@ namespace UdesAPP.Students
         public string? GSM { get; set; }
         public string? Email { get; set; }
         public string? Address { get; set; }
-        public int ClassId { get; set; }
+        public Guid ClassId { get; set; }
         public Gender? Gender { get; set; }
         public StudentState IsActive { get; set; }
         public StudentType? Type { get; set; }

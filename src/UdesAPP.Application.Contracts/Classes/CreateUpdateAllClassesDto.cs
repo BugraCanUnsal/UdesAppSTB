@@ -11,8 +11,8 @@ namespace UdesAPP.Classes
         [Required]
         [StringLength(150)]
         public string ClassName { get; set; }
-        public int? TeacherId { get; set; }
-        public int? BookId { get; set; }
+        public Guid? TeacherId { get; set; }
+        public Guid? BookId { get; set; }
         public int? DaysAndTimesOfWeekId { get; set; }
     }
 }

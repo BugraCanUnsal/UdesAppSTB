@@ -78,15 +78,7 @@ public class UdesAPPMenuContributor : IMenuContributor
                     icon: "fa-solid fa-person-chalkboard",
                      url: "/teachers"
                     ));
-
-            context.Menu.AddItem(
-                new ApplicationMenuItem(
-                    "Periods",
-                    l["Menu:Periods"],
-                    icon: "fa-solid fa-arrows-spin",
-                     url: "/periods"
-                    ));
-
+            
             context.Menu.AddItem(
                 new ApplicationMenuItem(
                     "Payments",
@@ -102,10 +94,15 @@ public class UdesAPPMenuContributor : IMenuContributor
                     icon: "fa-solid fa-book",
                      url: "/books"
                     ));
+            
+            context.Menu.AddItem(
+                new ApplicationMenuItem(
+                    "Periods",
+                    l["Menu:Periods"],
+                    icon: "fa-solid fa-arrows-spin",
+                    url: "/periods"
+                ));
         }
-        
-
-        
 
         if (MultiTenancyConsts.IsEnabled)
         {

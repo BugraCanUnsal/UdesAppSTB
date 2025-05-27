@@ -15,12 +15,12 @@ namespace UdesAPP.Payments
         CrudAppService<
             Payment,
             PaymentDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             PaymentDto>,
         IPaymentsCRUDAppService
     {
-        public PaymentsCRUDAppService(IRepository<Payment, int> repository) 
+        public PaymentsCRUDAppService(IRepository<Payment, Guid> repository) 
             : base(repository)
         {
         }

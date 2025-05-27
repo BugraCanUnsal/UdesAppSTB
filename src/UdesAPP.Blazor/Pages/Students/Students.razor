@@ -8,7 +8,7 @@
 @using Volo.Abp.AspNetCore.Components.Web
 @inject IStringLocalizer<UdesAPPResource> L
 @inject AbpBlazorMessageLocalizerHelper<UdesAPPResource> LH
-@inherits AbpCrudPageBase<IStudentAppService, StudentDto, int, PagedAndSortedResultRequestDto,CreateUpdateStudentsDto>
+@inherits AbpCrudPageBase<IStudentAppService, StudentDto, Guid, PagedAndSortedResultRequestDto,CreateUpdateStudentsDto>
 
 <Card>
     <CardHeader>
@@ -175,12 +175,12 @@
                     </Field>
                     <Field>
                         <FieldLabel>@L["Sınıfı"]</FieldLabel>
-                        <Select TValue="int" @bind-SelectedValue="@NewEntity.ClassId">
+                        <Select TValue="Guid" @bind-SelectedValue="@NewEntity.ClassId">
                             @if (Loaded)
                             {
                                 @foreach (AllClassesDto allClassesDto in AllClassesDtos)
                                 {
-                                    <SelectItem TValue="int" Value="allClassesDto.Id">
+                                    <SelectItem TValue="Guid" Value="allClassesDto.Id">
                                         @L[$"{allClassesDto.ClassName}"]
                                     </SelectItem>
                                 }
@@ -293,12 +293,12 @@
                     </Field>
                     <Field>
                         <FieldLabel>@L["Sınıfı"]</FieldLabel>
-                        <Select TValue="int" @bind-SelectedValue="@EditingEntity.ClassId">
+                        <Select TValue="Guid" @bind-SelectedValue="@EditingEntity.ClassId">
                             @if (Loaded)
                             {
                                 @foreach (AllClassesDto allClassesDto in AllClassesDtos)
                                 {
-                                    <SelectItem TValue="int" Value="allClassesDto.Id">
+                                    <SelectItem TValue="Guid" Value="allClassesDto.Id">
                                         @L[$"{allClassesDto.ClassName}"]
                                     </SelectItem>
                                 }

@@ -17,12 +17,12 @@ namespace UdesAPP.Periods
         CrudAppService<
             Period,
             PeriodsDto,
-            int,
+            Guid,
             PagedAndSortedResultRequestDto,
             PeriodsDto>,
             IPeriodsCRUDAppService
     {
-        public PeriodsCRUDAppService(IRepository<Period, int> repository)
+        public PeriodsCRUDAppService(IRepository<Period, Guid> repository)
             : base(repository)
         {
 
